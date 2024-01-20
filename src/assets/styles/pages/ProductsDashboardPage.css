@@ -1,0 +1,32 @@
+/* slick */
+.add-product-modal .slick-dots,
+.update-product-modal .slick-dots {
+  bottom: 0;
+  inset-inline-end: unset;
+  width: 100%;
+  margin: 14px 0 0;
+}
+
+.add-product-modal .slick-dots li button,
+.update-product-modal .slick-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  background-color: #000;
+}
+
+.add-product-modal .slick-dots li.slick-active,
+.update-product-modal .slick-dots li.slick-active {
+  width: 16px;
+}
+
+.add-product-modal .slick-dots li button::before,
+.update-product-modal .slick-dots li button::before {
+  font-size: unset;
+}
+
+.add-product-modal .slick-dots li.slick-active button,
+.update-product-modal .slick-dots li.slick-active button {
+  transform: scale(1.5);
+  background-color: #ffbe33;
+}
