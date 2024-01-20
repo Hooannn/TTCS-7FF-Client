@@ -80,6 +80,7 @@ export default function UsersDashboardPage() {
         onCancel={() => setUpdateModalOpen(false)}
       />
       <AddUserModal
+        showRole={false}
         onSubmit={onAddUser}
         isLoading={addUserMutation.isLoading}
         shouldOpen={shouldAddModalOpen}

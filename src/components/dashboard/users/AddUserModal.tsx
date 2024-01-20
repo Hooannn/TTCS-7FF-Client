@@ -11,8 +11,9 @@ interface AddUserModalProps {
   onCancel: () => void;
   onSubmit: (values: IUser) => void;
   isLoading: boolean;
+  showRole: boolean;
 }
-export default function AddUserModal({ shouldOpen, onCancel, onSubmit, isLoading }: AddUserModalProps) {
+export default function AddUserModal({ showRole, shouldOpen, onCancel, onSubmit, isLoading }: AddUserModalProps) {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
@@ -46,14 +47,14 @@ export default function AddUserModal({ shouldOpen, onCancel, onSubmit, isLoading
     >
       <Row>
         <Col span={24} style={{ textAlign: 'center' }}>
-          <AddUserForm form={form} onSubmit={onSubmit} />
+          <AddUserForm showRole={showRole} form={form} onSubmit={onSubmit} />
         </Col>
       </Row>
     </Modal>
   );
 }
 
-export const AddUserForm = ({ form, onSubmit }: { form: FormInstance; onSubmit: (values: IUser) => void }) => {
+export const AddUserForm = ({ showRole, form, onSubmit }: { showRole: boolean; form: FormInstance; onSubmit: (values: IUser) => void }) => {
   const { t } = useTranslation();
   const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqtrHsVnbfPaERaPm8v_vcvIXYxCGR0Lnbcw&usqp=CAU');
   const { uploadMutation } = useFiles();
@@ -157,12 +158,13 @@ export const AddUserForm = ({ form, onSubmit }: { form: FormInstance; onSubmit: 
             autoComplete="new-password"
           />
         </Form.Item>
-        <Form.Item name="role" label={t('role')} initialValue={'User'}>
-          <Select defaultValue={'User'} size="large">
-            <Select.Option value="User">User</Select.Option>
-            <Select.Option value="Admin">Admin</Select.Option>
-          </Select>
-        </Form.Item>
+        {showRole && (
+          <Form.Item name="role" label={t('role')} initialValue={'Staff'}>
+            <Select defaultValue="Staff" size="large">
+              <Select.Option value="Staff">Staff</Select.Option>
+            </Select>
+          </Form.Item>
+        )}
       </Form>
     </>
   );

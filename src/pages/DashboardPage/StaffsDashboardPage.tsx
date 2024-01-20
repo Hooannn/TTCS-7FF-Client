@@ -79,6 +79,7 @@ export default function StaffsDashboardPage() {
         showRole={true}
       />
       <AddUserModal
+        showRole
         onSubmit={onAddUser}
         isLoading={addUserMutation.isLoading}
         shouldOpen={shouldAddModalOpen}

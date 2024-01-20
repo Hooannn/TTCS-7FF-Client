@@ -2,8 +2,8 @@
 
 ## Todos (test and integrate with new backend api)
 
-- [x] UsersDashboardPage
-- [x] StaffsDashboardPage
+- [x] UsersDashboardPage (❌ filter, sort)
+- [x] StaffsDashboardPage (❌ filter, sort)
 - [x] AuthPage
 - [x] AboutPage
 - [x] AccountEditPage

@@ -93,9 +93,9 @@ export default ({ enabledFetchUsers, endpoint }: { enabledFetchUsers?: boolean; 
     mutationFn: (data: IUser) => axios.post<IResponseData<IUser>>(endpoint, data),
     onSuccess: res => {
       if (isSearching) {
-        queryClient.invalidateQueries('search-users');
+        queryClient.invalidateQueries(`search-users${endpoint}`);
         searchUsersQuery.refetch();
-      } else queryClient.invalidateQueries('users');
+      } else queryClient.invalidateQueries(`users${endpoint}`);
       toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
@@ -105,9 +105,9 @@ export default ({ enabledFetchUsers, endpoint }: { enabledFetchUsers?: boolean; 
     mutationFn: ({ userId, data }: { userId: string; data: IUser }) => axios.patch<IResponseData<IUser>>(`${endpoint}?id=${userId}`, data),
     onSuccess: res => {
       if (isSearching) {
-        queryClient.invalidateQueries('search-users');
+        queryClient.invalidateQueries(`search-users${endpoint}`);
         searchUsersQuery.refetch();
-      } else queryClient.invalidateQueries('users');
+      } else queryClient.invalidateQueries(`users${endpoint}`);
       toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
@@ -134,9 +134,9 @@ export default ({ enabledFetchUsers, endpoint }: { enabledFetchUsers?: boolean; 
     mutationFn: (userId: string) => axios.delete<IResponseData<unknown>>(`${endpoint}?id=${userId}`),
     onSuccess: res => {
       if (isSearching) {
-        queryClient.invalidateQueries('search-users');
+        queryClient.invalidateQueries(`search-users${endpoint}`);
         searchUsersQuery.refetch();
-      } else queryClient.invalidateQueries('users');
+      } else queryClient.invalidateQueries(`users${endpoint}`);
       toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
