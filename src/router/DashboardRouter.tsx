@@ -8,7 +8,6 @@ import {
   VouchersDashboardPage,
   CategoriesDashboardPage,
   OverallDashboardPage,
-  ReservationsDashboardPage,
 } from '../pages/DashboardPage';
 import ErrorPage from '../pages/ErrorPage';
 import AuthProtector from '../components/AuthProtector';
@@ -34,10 +33,6 @@ const dashboardRouter = [
       {
         path: 'staffs',
         element: <StaffsDashboardPage />,
-      },
-      {
-        path: 'reservations',
-        element: <ReservationsDashboardPage />,
       },
       {
         path: 'products',

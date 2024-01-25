@@ -3,7 +3,6 @@ import MainLayout from '../layouts/Main/Main';
 import ErrorPage from '../pages/ErrorPage';
 import MenuPage from '../pages/MenuPage';
 import AboutPage from '../pages/AboutPage';
-import BookingPage from '../pages/BookingPage';
 import HomePage from '../pages/HomePage';
 import CartPage from '../pages/CartPage';
 import ProductPage from '../pages/ProductPage';
@@ -30,10 +29,6 @@ const rootRouter = [
       {
         path: 'about',
         element: <AboutPage />,
-      },
-      {
-        path: 'booking',
-        element: <BookingPage />,
       },
       {
         path: 'cart',

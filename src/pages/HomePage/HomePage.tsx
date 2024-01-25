@@ -6,7 +6,6 @@ import SaleOff from './SaleOff';
 import Feedback from './Feedback';
 import Menu from '../../components/Menu';
 import AboutUs from '../../components/AboutUs';
-import BookingTable from '../../components/BookingTable';
 import '../../assets/styles/pages/HomePage.css';
 
 export default function RootRoute() {
@@ -23,7 +22,6 @@ export default function RootRoute() {
       <SaleOff />
       <Menu />
       <AboutUs />
-      <BookingTable />
       <Feedback />
     </div>
   );

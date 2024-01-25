@@ -3,7 +3,7 @@ import MainLayout from '../layouts/Main/Main';
 import ErrorPage from '../pages/ErrorPage';
 import AuthProtector from '../components/AuthProtector';
 import { Navigate } from 'react-router-dom';
-import { AccountEditPage, ChangeAvatarPage, ChangePasswordPage, MyOrdersPage, MyReservationsPage } from '../pages/ProfilePage';
+import { AccountEditPage, ChangeAvatarPage, ChangePasswordPage, MyOrdersPage } from '../pages/ProfilePage';
 
 const profileRouter = [
   {
@@ -34,10 +34,6 @@ const profileRouter = [
       {
         path: 'orders',
         element: <MyOrdersPage />,
-      },
-      {
-        path: 'reservations',
-        element: <MyReservationsPage />,
       },
     ],
   },
