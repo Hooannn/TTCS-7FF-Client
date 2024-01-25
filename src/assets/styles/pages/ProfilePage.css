@@ -77,11 +77,6 @@
   justify-content: flex-end;
 }
 
-.empty-order.empty-reservation {
-  background: url('/empty-reservation-bg.jpg');
-  background-size: cover;
-}
-
 .empty-order .empty-order-discover {
   display: flex;
   flex-direction: column;

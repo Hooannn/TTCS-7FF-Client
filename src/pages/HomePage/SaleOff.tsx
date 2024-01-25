@@ -14,8 +14,8 @@ const SALE_OFF_CONTENT = {
     },
     subTitle: {
       big: {
-        en: 'For orders from 300.000',
-        vi: 'Cho các đơn hàng từ 300.000',
+        en: 'For orders in Hoc Mon district',
+        vi: 'Cho các đơn hàng ở quận Hóc Môn',
       },
       small: {
         en: 'VND',

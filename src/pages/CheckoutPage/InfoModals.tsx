@@ -178,8 +178,8 @@ const CONTENT = {
           vi: 'Chấp nhận đơn hàng và giá cả',
         },
         text: {
-          en: 'We reserve the right to refuse or cancel your order or table order in case of force majeure. We may ask for more phone numbers and addresses before accepting orders.\nWe are committed to providing the most accurate pricing information to consumers. However, sometimes errors still occur, depending on the case, we will contact you for instructions or notice to cancel that order.',
-          vi: 'Chúng tôi có quyền từ chối hoặc hủy đơn hàng, đơn đặt bàn của quý khách trong các trường hợp bất khả kháng. Chúng tôi có thể hỏi thêm về số điện thoại và địa chỉ trước khi nhận đơn hàng.\nChúng tôi cam kết sẽ cung cấp thông tin giá cả chính xác nhất cho người tiêu dùng. Tuy nhiên, đôi lúc vẫn có sai sót xảy ra, tùy theo từng trường hợp chúng tôi sẽ liên hệ hướng dẫn hoặc thông báo hủy đơn hàng đó cho quý khách.',
+          en: 'We reserve the right to refuse or cancel your order in case of force majeure. We may ask for more phone numbers and addresses before accepting orders.\nWe are committed to providing the most accurate pricing information to consumers. However, sometimes errors still occur, depending on the case, we will contact you for instructions or notice to cancel that order.',
+          vi: 'Chúng tôi có quyền từ chối hoặc hủy đơn hàng của quý khách trong các trường hợp bất khả kháng. Chúng tôi có thể hỏi thêm về số điện thoại và địa chỉ trước khi nhận đơn hàng.\nChúng tôi cam kết sẽ cung cấp thông tin giá cả chính xác nhất cho người tiêu dùng. Tuy nhiên, đôi lúc vẫn có sai sót xảy ra, tùy theo từng trường hợp chúng tôi sẽ liên hệ hướng dẫn hoặc thông báo hủy đơn hàng đó cho quý khách.',
         },
       },
     ],
