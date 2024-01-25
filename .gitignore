@@ -4,6 +4,7 @@ logs
 yarn.lock
 .env
 .env.production
+.env.development
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
