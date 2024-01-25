@@ -248,6 +248,15 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
         </ul>
 
         <div className="nav-btns">
+          <Tooltip title={t('change language')}>
+            {i18n.resolvedLanguage === 'en' && (
+              <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>
+            )}
+            {i18n.resolvedLanguage === 'vi' && (
+              <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>
+            )}
+          </Tooltip>
+
           {!user && (
             <Button size="large" type="primary" shape="round" className="nav-btn" onClick={() => navigate('/auth')}>
               {t('sign in')}
