@@ -18,8 +18,8 @@ const SALE_OFF_CONTENT = {
         vi: 'Cho các đơn hàng ở quận Hóc Môn',
       },
       small: {
-        en: 'VND',
-        vi: 'VNĐ',
+        en: '',
+        vi: '',
       },
     },
     btnText: {
