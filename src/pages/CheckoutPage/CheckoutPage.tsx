@@ -2,7 +2,7 @@ import { FC, useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal, Col, Row } from 'antd';
+import { Avatar, Button, Divider, Form, Input, Tooltip, Image, Badge, ConfigProvider, Modal, Col, Row } from 'antd';
 import { CarryOutOutlined, HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
@@ -15,14 +15,9 @@ import { buttonStyle, containerStyle, inputStyle } from '../../assets/styles/glo
 import { RootState } from '../../store';
 import { IDetailedItem, IVoucher } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
-import FooterModals from './InfoModals';
+import FooterModals, { ShippingFeeModal, TermsOfDeliveryModal } from './InfoModals';
 import { setOrderNote } from '../../slices/app.slice';
 import dayjs from 'dayjs';
-
-interface IDeliveryOption {
-  disabled: boolean;
-  message: string;
-}
 
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
@@ -43,10 +38,10 @@ const CheckoutPage: FC = () => {
     formRef.current?.setFieldsValue({ name: `${user.lastName} ${user.firstName}` });
   }, []);
 
-  const [isDelivery, setIsDelivery] = useState(false);
+  const [termsOfDeliveryModalOpen, setTermsOfDeliveryModalOpen] = useState(false);
+  const [shippingFeeModalOpen, setShippingFeeModalOpen] = useState(false);
   const formRef = useRef<FormInstance>(null);
-  const { detailedItems, totalPrice, shippingFee: DEFAULT_SHIPPING_FEE } = useCart();
-  const shippingFee = isDelivery ? DEFAULT_SHIPPING_FEE : 0;
+  const { detailedItems, totalPrice } = useCart();
 
   const discount = useMemo(() => {
     if (!voucher?._id) return 0;
@@ -62,22 +57,21 @@ const CheckoutPage: FC = () => {
   };
 
   const onFinish = async (values: any) => {
-    if (takeFromStoreOption.disabled && deliveryOption.disabled) return;
+    if (deliveryDisabled) return;
     const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
     Modal.confirm({
       icon: null,
       title: t(`your order total is {{total}}, please confirm before ordering`, {
-        total: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice + shippingFee - discount),
+        total: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice - discount),
       }),
       okText: t('confirm'),
       cancelText: t('cancel'),
       onOk: async () => {
         const { data } = await checkoutMutation.mutateAsync({
-          voucher: voucher?._id,
+          voucherId: voucher?._id,
           customerId: user._id,
           items,
           note: orderNote,
-          isDelivery,
           ...values,
         });
         dispatch(setOrderNote(''));
@@ -96,56 +90,19 @@ const CheckoutPage: FC = () => {
     });
   };
 
-  const DEFAULT_OPTION = {
-    disabled: false,
-    message: '...',
-  };
-  const [takeFromStoreOption, setTakeFromStoreOption] = useState<IDeliveryOption>(DEFAULT_OPTION);
-  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption>(DEFAULT_OPTION);
-  const updateOption = useCallback(() => {
+  const [deliveryDisabled, setDeliveryDisabled] = useState<boolean>(false);
+  const checkIsCheckoutAvailable = useCallback(() => {
     const currentTime = dayjs(new Date()).format('HH:mm');
-    if (currentTime < '07:00') {
-      setTakeFromStoreOption({
-        disabled: true,
-        message: 'our store starts receiving online orders from 7:00',
-      });
-      setDeliveryOption({
-        disabled: true,
-        message: 'our store starts receiving online orders from 7:00',
-      });
-    } else if (currentTime <= '21:00') {
-      setTakeFromStoreOption({
-        disabled: false,
-        message: 'please get your order within 1 hour, or we might cancel it',
-      });
-      setDeliveryOption({
-        disabled: false,
-        message: 'you will have to pay extra ₫20.000 if the total price is less than ₫300.000',
-      });
-    } else if (currentTime <= '21:30') {
-      setTakeFromStoreOption({
-        disabled: false,
-        message: 'our store wil be closed at 22:00, please get your order before that',
-      });
-      setDeliveryOption({
-        disabled: true,
-        message: 'delivery service is not available after 21:00',
-      });
+    if (currentTime < '07:00' || currentTime > '22:00') {
+      setDeliveryDisabled(true);
     } else {
-      setTakeFromStoreOption({
-        disabled: true,
-        message: 'sorry, we only receive online order from 7:00 to 21:30',
-      });
-      setDeliveryOption({
-        disabled: true,
-        message: 'delivery service is not available after 21:00',
-      });
+      setDeliveryDisabled(false);
     }
   }, []);
 
   useEffect(() => {
-    updateOption();
-    const timerId = setInterval(updateOption, 60000);
+    checkIsCheckoutAvailable();
+    const timerId = setInterval(checkIsCheckoutAvailable, 60000);
 
     return () => clearInterval(timerId);
   }, []);
@@ -200,48 +157,29 @@ const CheckoutPage: FC = () => {
                       <Input size="large" spellCheck={false} placeholder={t('your name...').toString()} style={inputStyle} />
                     </Form.Item>
 
-                    <Radio.Group
-                      onChange={e => setIsDelivery(e.target.value)}
-                      value={isDelivery}
-                      style={{ marginBottom: 24 }}
-                      name="radiogroup"
-                      size="large"
+                    <Form.Item
+                      name="deliveryPhone"
+                      rules={[
+                        { required: true, message: t('required').toString() },
+                        {
+                          pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+                          message: t('invalid phone number').toString(),
+                        },
+                      ]}
                     >
-                      <Space direction="vertical">
-                        <Radio value={false} disabled={takeFromStoreOption.disabled}>
-                          {t('pick up at shop')} <i style={{ marginLeft: 6 }}>({t(takeFromStoreOption.message, { nsSeparator: false })})</i>
-                        </Radio>
-                        <Radio value={true} disabled={deliveryOption.disabled}>
-                          {t('delivery')} <i style={{ marginLeft: 6 }}>({t(deliveryOption.message, { nsSeparator: false })})</i>
-                        </Radio>
-                      </Space>
-                    </Radio.Group>
+                      <Input size="large" placeholder={t('phone number...').toString()} style={inputStyle} />
+                    </Form.Item>
 
-                    {isDelivery && (
-                      <>
-                        <Form.Item
-                          name="deliveryPhone"
-                          rules={[
-                            { required: true, message: t('required').toString() },
-                            {
-                              pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-                              message: t('invalid phone number').toString(),
-                            },
-                          ]}
-                        >
-                          <Input size="large" placeholder={t('phone number...').toString()} style={inputStyle} />
-                        </Form.Item>
-                        <Form.Item
-                          name="deliveryAddress"
-                          rules={[
-                            { required: true, message: t('required').toString() },
-                            { whitespace: true, message: t('required').toString() },
-                          ]}
-                        >
-                          <Input size="large" spellCheck={false} placeholder={t('address...').toString()} style={inputStyle} />
-                        </Form.Item>
-                      </>
-                    )}
+                    <Form.Item
+                      name="deliveryAddress"
+                      rules={[
+                        { required: true, message: t('required').toString() },
+                        { whitespace: true, message: t('required').toString() },
+                      ]}
+                    >
+                      <Input size="large" spellCheck={false} placeholder={t('address...').toString()} style={inputStyle} />
+                    </Form.Item>
+
                     <Row align="middle" justify="space-between" style={{ marginTop: 'auto' }}>
                       <div style={{ fontSize: '1rem', fontWeight: 500, cursor: 'pointer' }}>
                         <div onClick={() => navigate('/')}>
@@ -254,15 +192,13 @@ const CheckoutPage: FC = () => {
                       <Form.Item style={{ marginBottom: 0 }}>
                         <Button
                           loading={checkoutMutation.isLoading}
-                          disabled={takeFromStoreOption.disabled && deliveryOption.disabled}
+                          disabled={deliveryDisabled}
                           size="large"
                           type="primary"
                           htmlType="submit"
                           className="submit-btn"
                         >
-                          {takeFromStoreOption.disabled && deliveryOption.disabled
-                            ? t('available from 7:00 to 21:30', { nsSeparator: false })
-                            : t('checkout')}
+                          {deliveryDisabled ? t('available from 7:00 to 22:00', { nsSeparator: false }) : t('checkout')}
                         </Button>
                       </Form.Item>
                     </Row>
@@ -273,6 +209,9 @@ const CheckoutPage: FC = () => {
               </div>
 
               <div className="cart-items">
+                <TermsOfDeliveryModal shouldOpen={termsOfDeliveryModalOpen} onClose={() => setTermsOfDeliveryModalOpen(false)} />
+                <ShippingFeeModal shouldOpen={shippingFeeModalOpen} onClose={() => setShippingFeeModalOpen(false)} />
+
                 {detailedItems
                   .filter((item: IDetailedItem) => item.product.isAvailable)
                   .map((item: IDetailedItem) => (
@@ -291,6 +230,7 @@ const CheckoutPage: FC = () => {
                       <div className="item-price">{`₫${(item.product.price * item.quantity).toLocaleString('en-US')}`}</div>
                     </div>
                   ))}
+
                 <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                 <Form onFinish={onApplyVoucher} requiredMark={false} name="basic" autoComplete="off">
                   <Row gutter={12} align="middle">
@@ -340,16 +280,11 @@ const CheckoutPage: FC = () => {
                     </Col>
                   </Row>
                 </Form>
+
                 <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                 <div className="display-price">
                   <span>{t('subtotal')}</span>
                   <span style={{ fontWeight: 500 }}>{`₫${totalPrice.toLocaleString('en-US')}`}</span>
-                </div>
-                <div className="display-price">
-                  <span>
-                    {t('shipping fee')} <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-                  </span>
-                  <span style={{ fontWeight: 500 }}>{`₫${shippingFee.toLocaleString('en-US')}`}</span>
                 </div>
                 {discount > 0 && (
                   <div className="display-price">
@@ -357,12 +292,34 @@ const CheckoutPage: FC = () => {
                     <span style={{ fontWeight: 500, color: 'green' }}>- {`₫${discount.toLocaleString('en-US')}`}</span>
                   </div>
                 )}
+
+                <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+                <div className="display-price">
+                  <span>
+                    {t('shipping fee')}{' '}
+                    <QuestionCircleOutlined
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        setTermsOfDeliveryModalOpen(true);
+                      }}
+                    />
+                  </span>
+                  <span
+                    style={{ fontWeight: 500, color: 'green', cursor: 'pointer', textTransform: 'capitalize' }}
+                    onClick={() => {
+                      setShippingFeeModalOpen(true);
+                    }}
+                  >
+                    {t('show details')}
+                  </span>
+                </div>
+
                 <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                 <div className="display-price">
                   <span style={{ fontSize: '1rem', fontWeight: 500 }}>{t('total')}:</span>
                   <span>
                     <span style={{ marginRight: 9, fontSize: '0.75rem' }}>VND</span>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>{`₫${(totalPrice + shippingFee - discount).toLocaleString('en-US')}`}</span>
+                    <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>{`₫${(totalPrice - discount).toLocaleString('en-US')}`}</span>
                   </span>
                 </div>
               </div>

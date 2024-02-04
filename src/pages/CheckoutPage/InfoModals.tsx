@@ -9,7 +9,7 @@ interface InfoModalProps {
 interface InfoModalPropsWithType extends InfoModalProps {
   type: modalTypes;
 }
-type modalTypes = 'returnPolicy' | 'termsOfDelivery' | 'termsOfUse' | 'informationSecurity' | 'contactInfo';
+type modalTypes = keyof typeof CONTENT;
 
 const CONTENT = {
   returnPolicy: {
@@ -54,8 +54,8 @@ const CONTENT = {
           vi: 'Yêu cầu cho khách hàng',
         },
         text: {
-          en: 'Applies to delivered products only.\nThere is a video of the opening process.\nReturned products must be in the same quantity as when delivered.',
-          vi: 'Chỉ áp dụng cho các sản phẩm được giao hàng.\nCó video quay lại quá trình mở hàng.\nSản phẩm hoàn trả phải đầy đủ số lượng như khi được giao.',
+          en: 'There is a video of the opening process.\nReturned products must be in the same quantity as when delivered.',
+          vi: 'Có video quay lại quá trình mở hàng.\nSản phẩm hoàn trả phải đầy đủ số lượng như khi được giao.',
         },
       },
     ],
@@ -82,8 +82,8 @@ const CONTENT = {
           vi: 'Đơn vị vận chuyển',
         },
         text: {
-          en: 'Districts with 7FF branches: delivery staff at 7FF branches.\nOther districts: via Vnpost or Viettelpost post office.',
-          vi: 'Các quận có chi nhánh 7FF: nhân viên giao hàng tại các chi nhánh 7FF.\nCác quận khác: thông qua bưu điện Vnpost hoặc Viettelpost.',
+          en: 'Orders in Hoc Mon district: delivery staff from 7FF.\nOther districts: via food delivery services (Grab Food or Shopee Food).',
+          vi: 'Các đơn hàng ở quận Hóc Môn: nhân viên giao hàng tại 7FF.\nCác quận khác: thông qua các dịch vụ chuyển đồ ăn (Grab Food hoặc Shopee Food).',
         },
       },
       {
@@ -92,8 +92,8 @@ const CONTENT = {
           vi: 'Phí vận chuyển',
         },
         text: {
-          en: 'Orders under VND 300,000: the shipping fee listed is VND 20,000.\nOrders of 300,000 or more: free shipping.',
-          vi: 'Các đơn hàng dưới 300.000 VNĐ: mức phí vận chuyển niêm yết là 20.000 VNĐ.\nCác đơn hàng từ 300.000 trở lên: miễn phí vận chuyển.',
+          en: 'Orders in Hoc Mon district: free shipping.\nOther districts: the shipping fee is based on the delivery services.',
+          vi: 'Các đơn hàng ở quận Hóc Môn: miễn phí vận chuyển.\nOther districts: mức phí vận chuyển phụ thuộc vào đơn vị vận chuyển.',
         },
       },
       {
@@ -216,8 +216,36 @@ const CONTENT = {
           vi: 'Số điện thoại',
         },
         text: {
-          en: '(+84)913283742 (mr. Huy)\n(+084)913283743 (mr. Nguyen)',
-          vi: '(+84)913283742 (anh Huy)\n(+084)913283743 (anh Nguyên)',
+          en: '(+84)913.283.742 (mr. Huy)\n(+84)913.283.743 (mr. Nguyen)',
+          vi: '(+84)913.283.742 (anh Huy)\n(+84)913.283.743 (anh Nguyên)',
+        },
+      },
+    ],
+  },
+  shippingFee: {
+    title: {
+      en: 'Shipping Fee',
+      vi: 'Phí Vận Chuyển',
+    },
+    body: [
+      {
+        subTitle: {
+          en: 'Districts in Ho Chi Minh city',
+          vi: 'Các quận huyện ở thành phố Hồ Chí Minh',
+        },
+        text: {
+          en: '',
+          vi: '',
+        },
+      },
+      {
+        subTitle: {
+          en: 'Districts outside Ho Chi Minh city',
+          vi: 'Các quận huyện khác ngoài thành phố Hồ Chí Minh',
+        },
+        text: {
+          en: '7ff currently does not have a delivery policy outside of Ho Chi Minh City, we sincerely apologize.',
+          vi: '7FF hiện chưa có chính sách giao hàng ngoài phạm vi thành phố Hồ Chí Minh, chúng tôi chân thành xin lỗi.',
         },
       },
     ],
@@ -268,6 +296,7 @@ const InformationSecurityModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) =
   <InfoModal type="informationSecurity" shouldOpen={shouldOpen} onClose={onClose} />
 );
 const ContactInfoModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => <InfoModal type="contactInfo" shouldOpen={shouldOpen} onClose={onClose} />;
+const ShippingFeeModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => <InfoModal type="shippingFee" shouldOpen={shouldOpen} onClose={onClose} />;
 
 const FooterModals: FC = () => {
   const { t } = useTranslation();
@@ -292,3 +321,4 @@ const FooterModals: FC = () => {
 };
 
 export default FooterModals;
+export { TermsOfDeliveryModal, ShippingFeeModal };
