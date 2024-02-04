@@ -374,8 +374,8 @@
   "you will have to pay extra ₫20.000 if the total price is less than ₫300.000": "You will have to pay extra ₫20.000 if the total price is less than ₫300.000",
   "our store wil be closed at 22:00, please get your order before that": "Our store wil be closed at 22:00, please get your order before that",
   "delivery service is not available after 21:00": "Delivery service is not available after 21:00",
-  "sorry, we only receive online order from 7:00 to 21:30": "Sorry, we only receive online order from 7:00 to 21:30",
-  "available from 7:00 to 21:30": "Available from 7:00 to 21:30",
+  "sorry, we only receive online order from 7:00 to 22:00": "Sorry, we only receive online order from 7:00 to 22:00",
+  "available from 7:00 to 22:00": "Available from 7:00 to 22:00",
   "sign in with Google": "Sign in with Google",
   "sign up with Google": "Sign up with Google",
   "this product is currently unavailable": "This product is currently unavailable",
@@ -426,7 +426,8 @@
   "voucher deleted": "Voucher deleted",
   "CATEGORY_DUPLICATE_NAME": "Duplicate category name",
   "CATEGORY_ALREADY_ATTACHED": "The list has been tagged with products, make sure the category is not being used before deleting",
-  "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 21:30, and the delivery service is only available before 21:00",
+  "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 22:00, and the delivery service is only available before 21:00",
   "INVALID_VOUCHER_AMOUNT": "This voucher has an invalid discount amount",
-  "VOUCHER_EXISTED": "This voucher is already existed"
+  "VOUCHER_EXISTED": "This voucher is already existed",
+  "show details": "show details"
 }

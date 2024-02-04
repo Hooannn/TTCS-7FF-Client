@@ -375,8 +375,8 @@
   "you will have to pay extra ₫20.000 if the total price is less than ₫300.000": "Bạn phải trả thêm ₫20.000 phí vận chuyển nếu giá trị đơn hàng thấp hơn ₫300.000",
   "our store wil be closed at 22:00, please get your order before that": "Cửa hàng sẽ đóng cửa vào lúc 22:00, vui lòng đến lấy hàng trước thời điểm đó",
   "delivery service is not available after 21:00": "Bạn không thể sử dụng dịch vụ giao hàng sau 21:00",
-  "sorry, we only receive online order from 7:00 to 21:30": "Xin lỗi, chúng tôi chỉ nhận đơn hàng online từ 7:00 đến 21:30",
-  "available from 7:00 to 21:30": "Chỉ áp dụng từ 7:00 đến 21:30",
+  "sorry, we only receive online order from 7:00 to 22:00": "Xin lỗi, chúng tôi chỉ nhận đơn hàng online từ 7:00 đến 22:00",
+  "available from 7:00 to 22:00": "Chỉ áp dụng từ 7:00 đến 22:00",
   "sign in with Google": "Đăng nhập bằng Google",
   "sign up with Google": "Đăng ký bằng Google",
   "this product is currently unavailable": "Sản phẩm hiện không khả dụng",
@@ -427,7 +427,8 @@
   "voucher deleted": "Mã giảm giá đã bị xóa",
   "CATEGORY_DUPLICATE_NAME": "Tên danh mục bị trùng",
   "CATEGORY_ALREADY_ATTACHED": "Đang có sản phẩm thuộc danh mục này, hãy chắc rằng danh mục không được sử dụng trước khi xóa",
-  "INVALID_CHECKOUT_TIME": "Xin lỗi, bạn chỉ có thể đặt hàng online từ 7:00 đến 21:30, và dịch vụ giao hàng chỉ khả dụng trước 21:00",
+  "INVALID_CHECKOUT_TIME": "Xin lỗi, bạn chỉ có thể đặt hàng online từ 7:00 đến 22:00, và dịch vụ giao hàng chỉ khả dụng trước 21:00",
   "INVALID_VOUCHER_AMOUNT": "Mã giảm giá có giá trị giảm không hợp lệ",
-  "VOUCHER_EXISTED": "Mã giảm giá đã tồn tại"
+  "VOUCHER_EXISTED": "Mã giảm giá đã tồn tại",
+  "show details": "xem chi tiết"
 }
