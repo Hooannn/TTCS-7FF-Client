@@ -24,8 +24,6 @@ export default function UpdateCategoryModal({ category, shouldOpen, onCancel, on
       form.setFieldsValue({
         'name.vi': category.name.vi,
         'name.en': category.name.en,
-        'description.vi': category.description.vi,
-        'description.en': category.description.en,
       });
   }, [shouldOpen]);
 
@@ -73,14 +71,8 @@ export const UpdateCategoryForm = ({
 
   const onFinish = (values: any) => {
     onSubmit({
-      name: {
-        vi: values['name.vi'],
-        en: values['name.en'],
-      },
-      description: {
-        vi: values['description.vi'],
-        en: values['description.en'],
-      },
+      nameVi: values['name.vi'],
+      nameEn: values['name.en'],
     });
   };
 
@@ -106,38 +98,6 @@ export const UpdateCategoryForm = ({
           ]}
         >
           <Input size="large" spellCheck={false} placeholder={t('name en').toString()} style={inputStyle} />
-        </Form.Item>
-        <Form.Item
-          label={t('description vi')}
-          name="description.vi"
-          rules={[
-            { required: true, message: t('required').toString() },
-            { whitespace: true, message: t('required').toString() },
-          ]}
-        >
-          <Input.TextArea
-            size="large"
-            spellCheck={false}
-            placeholder={t('description vi').toString()}
-            autoSize={{ minRows: 2, maxRows: 4 }}
-            style={inputStyle}
-          />
-        </Form.Item>
-        <Form.Item
-          label={t('description en')}
-          name="description.en"
-          rules={[
-            { required: true, message: t('required').toString() },
-            { whitespace: true, message: t('required').toString() },
-          ]}
-        >
-          <Input.TextArea
-            size="large"
-            spellCheck={false}
-            placeholder={t('description en').toString()}
-            autoSize={{ minRows: 2, maxRows: 4 }}
-            style={inputStyle}
-          />
         </Form.Item>
       </Form>
     </>

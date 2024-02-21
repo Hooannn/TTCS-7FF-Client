@@ -88,10 +88,10 @@ export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmi
         <Form.Item name="expiredDate" label={t('expired date')}>
           <DatePicker format="DD/MM/YYYY" style={{ width: '100%' }} size="large" locale={locale === 'vi' ? localeVN : localeUS} />
         </Form.Item>
-        <Form.Item name="discountType" label={t('discount type')} initialValue={'amount'}>
-          <Select defaultValue={'amount'} size="large">
-            <Select.Option value="amount">{t('amount')}</Select.Option>
-            <Select.Option value="percent">{t('percent')}</Select.Option>
+        <Form.Item name="discountType" label={t('discount type')} initialValue={'Fixed Amount'}>
+          <Select defaultValue={'Fixed Amount'} size="large">
+            <Select.Option value="Fixed Amount">{t('amount')}</Select.Option>
+            <Select.Option value="Percent">{t('percent')}</Select.Option>
           </Select>
         </Form.Item>
       </Form>

@@ -44,7 +44,7 @@ export default function UpdateProductModal({
         'name.en': product.name.en,
         'description.vi': product.description.vi,
         'description.en': product.description.en,
-        category: (product.category as any)?._id,
+        category: (product.category as any)?.categoryId,
       });
   }, [shouldOpen]);
 
@@ -114,9 +114,11 @@ export const UpdateProductForm = ({
   const onFinish = (values: any) => {
     onSubmit({
       category: values.category.value,
-      featuredImages,
+      categoryId: values.category.value,
       isAvailable: values.isAvailable,
+      featuredImages,
       price: values.price,
+      currentPrice: values.price,
       name: {
         vi: values['name.vi'],
         en: values['name.en'],
@@ -125,6 +127,10 @@ export const UpdateProductForm = ({
         vi: values['description.vi'],
         en: values['description.en'],
       },
+      nameVi: values['name.vi'],
+      nameEn: values['name.en'],
+      descriptionVi: values['description.vi'],
+      descriptionEn: values['description.en'],
     });
   };
 
@@ -263,8 +269,6 @@ export const UpdateProductForm = ({
               placeholder={t('select category')}
               labelInValue
               filterOption={false}
-              showSearch
-              onSearch={onSearchCategory}
               size="large"
               onChange={onCategoryChange}
               options={categoryOptions}

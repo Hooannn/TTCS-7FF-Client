@@ -168,7 +168,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
       key: 'category',
       render: category => (
         <div>
-          {category.name[locale] || (
+          {(locale == 'vi' ? category?.nameVi : category?.nameEn) || (
             <small>
               <em>{t('not updated yet')}</em>
             </small>

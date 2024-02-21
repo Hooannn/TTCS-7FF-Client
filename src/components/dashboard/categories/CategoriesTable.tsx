@@ -110,31 +110,6 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({
       ),
     },
     {
-      title: t('description'),
-      dataIndex: 'description',
-      key: 'description',
-      render: description => (
-        <div>
-          <div>
-            VI:{' '}
-            {description.vi || (
-              <small>
-                <em>{t('not updated yet')}</em>
-              </small>
-            )}
-          </div>
-          <div>
-            EN:{' '}
-            {description.en || (
-              <small>
-                <em>{t('not updated yet')}</em>
-              </small>
-            )}
-          </div>
-        </div>
-      ),
-    },
-    {
       title: t('action'),
       key: 'action',
       align: 'center',
