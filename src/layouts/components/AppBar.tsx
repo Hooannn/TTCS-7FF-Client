@@ -113,8 +113,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   };
 
   const searchProducts = useQuery(['appbar-search-products'], {
-    queryFn: () =>
-      axios.get<IResponseData<IProduct[]>>(`/search/products?q=${JSON.stringify({ $regex: (debouncedSearchTerm as string).trim(), $options: 'i' })}`),
+    queryFn: () => axios.get<IResponseData<IProduct[]>>(`/search/products?q=${(debouncedSearchTerm as string).trim()}`),
     enabled: false,
     onSuccess: res => {
       setSearchResult(res.data?.data);
