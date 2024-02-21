@@ -4,6 +4,7 @@ export interface ICategory {
   description: IContent;
   icon?: string;
   createdAt?: string;
+  categoryId: string;
 }
 export interface IContent {
   vi: string;

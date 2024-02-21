@@ -52,7 +52,7 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
 
   useEffect(() => {
     const activeCategory = categories?.find(category => category.name[locale] === categoryQuery.get('category'));
-    if (activeCategory) setSearchProductQuery(JSON.stringify({ category: activeCategory, ...ADDITIONAL_FILTER }));
+    if (activeCategory) setSearchProductQuery(JSON.stringify({ category: { categoryId: activeCategory.categoryId }, ...ADDITIONAL_FILTER }));
     else setSearchProductQuery(JSON.stringify({ ...ADDITIONAL_FILTER }));
   }, [categoryQuery.get('category')]);
 
