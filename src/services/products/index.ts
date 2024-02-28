@@ -7,10 +7,8 @@ import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
-  '-createdAt': { createdAt: -1 },
-  createdAt: { createdAt: 1 },
-  '-updatedAt': { updatedAt: -1 },
-  updatedAt: { updatedAt: 1 },
+  '-createdAt': { createdAt: 'DESC' },
+  createdAt: { createdAt: 'ASC' },
 };
 export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) => {
   const { t } = useTranslation();
@@ -38,16 +36,16 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
     const { isAvailable, searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
     const query: any = {};
     query.isAvailable = isAvailable;
-    if (searchPriceQuery) query.price = JSON.parse(searchPriceQuery);
-    if (searchCategory) query.category = searchCategory;
-    if (searchNameVi) query['name.vi'] = { $regex: `${searchNameVi}`, $options: 'i' };
-    if (searchNameEn) query['name.en'] = { $regex: `${searchNameEn}`, $options: 'i' };
-    if (searchDescVi) query['description.vi'] = { $regex: `${searchDescVi}`, $options: 'i' };
-    if (searchDescEn) query['description.en'] = { $regex: `${searchDescEn}`, $options: 'i' };
+    if (searchPriceQuery) query.currentPrice = JSON.parse(searchPriceQuery);
+    if (searchCategory) query.categoryId = searchCategory;
+    if (searchNameVi) query['nameVi'] = searchNameVi;
+    if (searchNameEn) query['nameEn'] = searchNameEn;
+    if (searchDescVi) query['descriptionVi'] = searchDescVi;
+    if (searchDescEn) query['descriptionEn'] = searchDescEn;
     if (range)
       query.createdAt = {
-        $gte: range[0],
-        $lte: range[1],
+        start: range[0],
+        end: range[1],
       };
     setQuery(JSON.stringify(query));
     if (sort) setSort(JSON.stringify((SORT_MAPPING as any)[sort]));

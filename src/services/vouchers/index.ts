@@ -9,8 +9,6 @@ import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
   '-createdAt': { createdAt: -1 },
   createdAt: { createdAt: 1 },
-  '-updatedAt': { updatedAt: -1 },
-  updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) => {
   const { t } = useTranslation();
@@ -27,14 +25,14 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
   const buildQuery = (values: { searchString: string; sort: string; discountType: string; range: string[] | any[] | undefined }) => {
     const { searchString, sort, discountType, range } = values;
     const query: any = {};
-    if (searchString) query.code = { $regex: `^${searchString.toUpperCase()}` };
+    if (searchString) query.code = searchString;
     if (discountType) {
       query.discountType = discountType !== 'All' ? discountType : undefined;
     }
     if (range)
       query.createdAt = {
-        $gte: range[0],
-        $lte: range[1],
+        start: range[0],
+        end: range[1],
       };
     setQuery(JSON.stringify(query));
     if (sort) setSort(JSON.stringify((SORT_MAPPING as any)[sort]));

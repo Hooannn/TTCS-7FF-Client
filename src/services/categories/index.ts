@@ -7,10 +7,8 @@ import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
-  '-createdAt': { createdAt: -1 },
-  createdAt: { createdAt: 1 },
-  '-updatedAt': { updatedAt: -1 },
-  updatedAt: { updatedAt: 1 },
+  '-createdAt': { createdAt: 'DESC' },
+  createdAt: { createdAt: 'ASC' },
 };
 export default ({ enabledFetchCategories }: { enabledFetchCategories?: boolean }) => {
   const { t } = useTranslation();
@@ -24,24 +22,15 @@ export default ({ enabledFetchCategories }: { enabledFetchCategories?: boolean }
   const queryClient = useQueryClient();
   const axios = useAxiosIns();
 
-  const buildQuery = (values: {
-    searchNameVi: string;
-    searchNameEn: string;
-    searchDescVi: string;
-    searchDescEn: string;
-    sort: string;
-    range: string[] | any[] | undefined;
-  }) => {
-    const { searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
+  const buildQuery = (values: { searchNameVi: string; searchNameEn: string; sort: string; range: string[] | any[] | undefined }) => {
+    const { searchNameVi, searchNameEn, sort, range } = values;
     const query: any = {};
-    if (searchNameVi) query['name.vi'] = { $regex: `${searchNameVi}` };
-    if (searchNameEn) query['name.en'] = { $regex: `${searchNameEn}` };
-    if (searchDescVi) query['description.vi'] = { $regex: `${searchDescVi}` };
-    if (searchDescEn) query['description.en'] = { $regex: `${searchDescEn}` };
+    if (searchNameVi) query['nameVi'] = searchNameVi;
+    if (searchNameEn) query['nameEn'] = searchNameEn;
     if (range)
       query.createdAt = {
-        $gte: range[0],
-        $lte: range[1],
+        start: range[0],
+        end: range[1],
       };
     setQuery(JSON.stringify(query));
     if (sort) setSort(JSON.stringify((SORT_MAPPING as any)[sort]));

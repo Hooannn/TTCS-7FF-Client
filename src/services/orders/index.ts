@@ -7,10 +7,8 @@ import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
-  '-createdAt': { createdAt: -1 },
-  createdAt: { createdAt: 1 },
-  '-updatedAt': { updatedAt: -1 },
-  updatedAt: { updatedAt: 1 },
+  '-createdAt': { createdAt: 'DESC' },
+  createdAt: { createdAt: 'ASC' },
 };
 export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
   const { t } = useTranslation();
