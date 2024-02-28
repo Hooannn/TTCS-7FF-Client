@@ -58,7 +58,7 @@ const CheckoutPage: FC = () => {
 
   const onFinish = async (values: any) => {
     if (deliveryDisabled) return;
-    const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
+    const items = cartItems.map((cartItem: any) => ({ productId: cartItem.product.productId, quantity: cartItem.quantity }));
     Modal.confirm({
       icon: null,
       title: t(`your order total is {{total}}, please confirm before ordering`, {

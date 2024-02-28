@@ -14,9 +14,9 @@ interface SortAndFilterProps {
   onReset: () => void;
   categories: ICategory[];
 }
-
+type Availability = 'all' | 'yes' | 'no';
 interface SortAndFilterChangeParams {
-  isAvailable: boolean;
+  isAvailable: Availability;
   searchPriceQuery: string;
   searchCategory: string;
   searchNameVi: string;
@@ -34,7 +34,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
   const [priceSort, setPriceSort] = useState<string>('start');
   const [searchPrice, setSearchPrice] = useState<string>('');
   const [searchNameEn, setSearchNameEn] = useState<string>('');
-  const [isAvailable, setIsAvailable] = useState<boolean>(true);
+  const [isAvailable, setIsAvailable] = useState<Availability>('all');
   const [searchDescVi, setSearchDescVi] = useState<string>('');
   const [searchDescEn, setSearchDescEn] = useState<string>('');
   const [searchCategory, setSearchCategory] = useState<string>('');
@@ -188,8 +188,9 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
             <div>
               <div>{t("filter by product's availability")}</div>
               <Select size="large" value={isAvailable} onChange={value => setIsAvailable(value)} style={{ width: '100%' }}>
-                <Select.Option value={true}>{t('yes')}</Select.Option>
-                <Select.Option value={false}>{t('no')}</Select.Option>
+                <Select.Option value="all">{t('all')}</Select.Option>
+                <Select.Option value="yes">{t('yes')}</Select.Option>
+                <Select.Option value="no">{t('no')}</Select.Option>
               </Select>
             </div>
             <div>

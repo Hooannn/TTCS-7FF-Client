@@ -10,6 +10,7 @@ const SORT_MAPPING = {
   '-createdAt': { createdAt: 'DESC' },
   createdAt: { createdAt: 'ASC' },
 };
+type Availability = 'all' | 'yes' | 'no';
 export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) => {
   const { t } = useTranslation();
   const [itemPerPage, setItemPerPage] = useState<number>(8);
@@ -23,7 +24,7 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
   const axios = useAxiosIns();
 
   const buildQuery = (values: {
-    isAvailable: boolean;
+    isAvailable: Availability;
     searchPriceQuery: string;
     searchCategory: string;
     searchNameVi: string;
@@ -35,7 +36,9 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
   }) => {
     const { isAvailable, searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
     const query: any = {};
-    query.isAvailable = isAvailable;
+    if (isAvailable !== 'all') {
+      query.isAvailable = isAvailable === 'yes';
+    } else delete query.isAvailable;
     if (searchPriceQuery) query.currentPrice = JSON.parse(searchPriceQuery);
     if (searchCategory) query.categoryId = searchCategory;
     if (searchNameVi) query['nameVi'] = searchNameVi;

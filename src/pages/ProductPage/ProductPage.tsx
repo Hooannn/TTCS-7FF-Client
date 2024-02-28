@@ -72,8 +72,8 @@ const ProductPage: FC = () => {
                     },
                     {
                       title: (
-                        <Link to={`/menu?category=${(product?.category as any)?.name[locale]}`}>
-                          <span className="breadcrumb-item">{(product?.category as any)?.name[locale]}</span>
+                        <Link to={`/menu?category=${locale === 'vi' ? (product?.category as any)?.nameVi : (product?.category as any)?.nameEn}`}>
+                          <span className="breadcrumb-item">{locale === 'vi' ? (product?.category as any)?.nameVi : (product?.category as any)?.nameEn}</span>
                         </Link>
                       ),
                     },
@@ -104,9 +104,8 @@ const ProductPage: FC = () => {
                     <div className="product-name">{product?.name[locale]}</div>
                     <div className="product-sold-units">
                       <span style={{ fontSize: '1rem', fontWeight: 500 }}>{productYearlyTotalSoldUnits || 0}</span>
-                      <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${
-                        productYearlyTotalSoldUnits && productYearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
-                      } ${t('sold this year')}`}</span>
+                      <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${productYearlyTotalSoldUnits && productYearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
+                        } ${t('sold this year')}`}</span>
                     </div>
                     <Space size={10}>
                       <Rate disabled defaultValue={Math.ceil((product?.rating as any) / 0.5) * 0.5} allowHalf className="product-rating" />
