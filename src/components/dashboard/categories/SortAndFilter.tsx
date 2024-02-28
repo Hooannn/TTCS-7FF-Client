@@ -16,8 +16,6 @@ interface SortAndFilterProps {
 interface SortAndFilterChangeParams {
   searchNameVi: string;
   searchNameEn: string;
-  searchDescVi: string;
-  searchDescEn: string;
   sort: string;
   range: string[] | any[] | undefined;
 }
@@ -26,8 +24,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
   const { t } = useTranslation();
   const [searchNameVi, setSearchNameVi] = useState<string>('');
   const [searchNameEn, setSearchNameEn] = useState<string>('');
-  const [searchDescVi, setSearchDescVi] = useState<string>('');
-  const [searchDescEn, setSearchDescEn] = useState<string>('');
   const [filterCount, setFilterCount] = useState<number>(0);
   const [sort, setSort] = useState<string>('-createdAt');
   const [rangePickerDate, setRangePickerDate] = useState<any[]>([]);
@@ -42,8 +38,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
   const onInternalReset = () => {
     setSearchNameVi('');
     setSearchNameEn('');
-    setSearchDescVi('');
-    setSearchDescEn('');
     setSort('-createdAt');
     setRangePickerDate([]);
     setFilterCount(0);
@@ -52,13 +46,13 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
 
   const onInternalSearch = () => {
     onSearch();
-    if (!searchNameVi && !searchNameEn && !searchDescVi && !searchDescEn && sort === '-createdAt' && !range?.length) return setFilterCount(0);
+    if (!searchNameVi && !searchNameEn && sort === '-createdAt' && !range?.length) return setFilterCount(0);
     setFilterCount(1);
   };
 
   useEffect(() => {
-    onChange({ searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range });
-  }, [searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range]);
+    onChange({ searchNameVi, searchNameEn, sort, range });
+  }, [searchNameVi, searchNameEn, sort, range]);
 
   const content = () => {
     return (
@@ -86,26 +80,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
               />
             </div>
             <div>
-              <div>{t('search by description vi')}</div>
-              <Input
-                value={searchDescVi}
-                size="large"
-                allowClear
-                placeholder={t('name').toString()}
-                onChange={e => setSearchDescVi(e.target.value)}
-              />
-            </div>
-            <div>
-              <div>{t('search by description en')}</div>
-              <Input
-                value={searchDescEn}
-                size="large"
-                allowClear
-                placeholder={t('name').toString()}
-                onChange={e => setSearchDescEn(e.target.value)}
-              />
-            </div>
-            <div>
               <div>{t('search by creation date')}</div>
               <DatePicker.RangePicker
                 locale={i18n.resolvedLanguage === 'vi' ? localeVN : localeUS}
@@ -125,14 +99,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
                 <Select.Option value="createdAt">
                   <SortAscendingOutlined />
                   {t('created at')}
-                </Select.Option>
-                <Select.Option value="-updatedAt">
-                  <SortDescendingOutlined />
-                  {t('updated at')}
-                </Select.Option>
-                <Select.Option value="updatedAt">
-                  <SortAscendingOutlined />
-                  {t('updated at')}
                 </Select.Option>
               </Select>
             </div>

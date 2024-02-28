@@ -83,8 +83,8 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
               <div>{t('search by discount type')}</div>
               <Select value={discountType} size="large" defaultValue="All" style={{ width: '100%' }} onChange={value => setDiscountType(value)}>
                 <Select.Option value="All">{t('all')}</Select.Option>
-                <Select.Option value="amount">{t('amount')}</Select.Option>
-                <Select.Option value="percent">{t('percent')}</Select.Option>
+                <Select.Option value="Fixed Amount">{t('amount')}</Select.Option>
+                <Select.Option value="Percent">{t('percent')}</Select.Option>
               </Select>
             </div>
             <div>
@@ -97,14 +97,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
                 <Select.Option value="createdAt">
                   <SortAscendingOutlined />
                   {t('created at')}
-                </Select.Option>
-                <Select.Option value="-updatedAt">
-                  <SortDescendingOutlined />
-                  {t('updated at')}
-                </Select.Option>
-                <Select.Option value="updatedAt">
-                  <SortAscendingOutlined />
-                  {t('updated at')}
                 </Select.Option>
               </Select>
             </div>

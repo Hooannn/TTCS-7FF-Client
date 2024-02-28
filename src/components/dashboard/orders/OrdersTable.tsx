@@ -60,7 +60,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   const columns: ColumnsType<IOrder> = [
     {
       title: t('id'),
-      dataIndex: '_id',
+      dataIndex: 'orderId',
       key: 'id',
       render: text => (
         <span>
@@ -115,7 +115,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                   </Col>
                   <Col>
                     <div>
-                      {t('name')}: {item.product?.name[locale]}
+                      {t('name')}: {locale === 'vi' ? item.product?.nameVi : item.product?.nameEn}
                     </div>
                     <div>
                       {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product?.price ?? 0)}
@@ -197,25 +197,6 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
           )}
         </span>
       ),
-    },
-    {
-      title: t('is delivery'),
-      dataIndex: 'isDelivery',
-      key: 'isDelivery',
-      render: (value, record) => {
-        return value ? (
-          <>
-            <p style={{ margin: 0 }}>
-              {t('phone number')}: {record.deliveryPhone}
-            </p>
-            <p style={{ margin: 0 }}>
-              {t('address')}: {record.deliveryAddress}
-            </p>
-          </>
-        ) : (
-          <span>{t('no')}</span>
-        );
-      },
     },
     {
       title: t('status'),

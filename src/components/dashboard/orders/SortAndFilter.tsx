@@ -95,14 +95,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
                   <SortAscendingOutlined />
                   {t('created at')}
                 </Select.Option>
-                <Select.Option value="-updatedAt">
-                  <SortDescendingOutlined />
-                  {t('updated at')}
-                </Select.Option>
-                <Select.Option value="updatedAt">
-                  <SortAscendingOutlined />
-                  {t('updated at')}
-                </Select.Option>
               </Select>
             </div>
           </Space>

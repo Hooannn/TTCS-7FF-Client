@@ -31,6 +31,8 @@ export interface IProduct {
     totalSales: number;
     totalUnits: number;
   };
+  nameVi: string;
+  nameEn: string;
   stocks: number;
   category: ICategory | string;
   isAvailable: boolean;

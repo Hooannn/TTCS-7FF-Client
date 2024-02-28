@@ -31,7 +31,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
   const { t } = useTranslation();
   const [searchNameVi, setSearchNameVi] = useState<string>('');
   const [searchPriceQuery, setSearchPriceQuery] = useState<string>('');
-  const [priceSort, setPriceSort] = useState<string>('$lte');
+  const [priceSort, setPriceSort] = useState<string>('start');
   const [searchPrice, setSearchPrice] = useState<string>('');
   const [searchNameEn, setSearchNameEn] = useState<string>('');
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
@@ -128,9 +128,9 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
                   />
                 </Col>
                 <Col span={8}>
-                  <Select value={priceSort} size="large" defaultValue="$lte" style={{ width: '100%' }} onChange={value => setPriceSort(value)}>
-                    <Select.Option value="$gte">{t('greater than or equal')}</Select.Option>
-                    <Select.Option value="$lte">{t('less than or equal')}</Select.Option>
+                  <Select value={priceSort} size="large" defaultValue="start" style={{ width: '100%' }} onChange={value => setPriceSort(value)}>
+                    <Select.Option value="start">{t('greater than or equal')}</Select.Option>
+                    <Select.Option value="end">{t('less than or equal')}</Select.Option>
                   </Select>
                 </Col>
               </Row>
@@ -202,14 +202,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
                 <Select.Option value="createdAt">
                   <SortAscendingOutlined />
                   {t('created at')}
-                </Select.Option>
-                <Select.Option value="-updatedAt">
-                  <SortDescendingOutlined />
-                  {t('updated at')}
-                </Select.Option>
-                <Select.Option value="updatedAt">
-                  <SortAscendingOutlined />
-                  {t('updated at')}
                 </Select.Option>
               </Select>
             </div>

@@ -7,10 +7,8 @@ import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
-  '-createdAt': { createdAt: -1 },
-  createdAt: { createdAt: 1 },
-  '-updatedAt': { updatedAt: -1 },
-  updatedAt: { updatedAt: 1 },
+  '-createdAt': { createdAt: 'DESC' },
+  createdAt: { createdAt: 'ASC' },
 };
 export default ({ enabledFetchUsers, endpoint }: { enabledFetchUsers?: boolean; endpoint: string }) => {
   const { t } = useTranslation();
@@ -27,12 +25,12 @@ export default ({ enabledFetchUsers, endpoint }: { enabledFetchUsers?: boolean; 
   const buildQuery = (values: { searchString: string; sort: string; role: string; range: string[] | any[] | undefined }) => {
     const { searchString, sort, role, range } = values;
     const query: any = {};
-    if (searchString) query.email = { $regex: `^${searchString}` };
+    if (searchString) query.email = searchString;
     if (role) query.role = role !== 'All' ? role : undefined;
     if (range)
       query.createdAt = {
-        $gte: range[0],
-        $lte: range[1],
+        start: range[0],
+        end: range[1],
       };
     setQuery(JSON.stringify(query));
     if (sort) setSort(JSON.stringify((SORT_MAPPING as any)[sort]));
