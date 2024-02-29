@@ -234,8 +234,8 @@ const CONTENT = {
           vi: 'Các quận huyện ở thành phố Hồ Chí Minh',
         },
         text: {
-          en: '',
-          vi: '',
+          en: 'Hoc Mon district: Free shipping\nDistricts 12, Cu Chi, Go Vap, Tan Binh, Tan Phu, Binh Tan: 15.000 VND per order\nDistricts Binh Chanh, Binh Thanh, Phu Nhuan, Thu Duc: 20.000 VND per order\nDistricts 1, 3, 4, 5, 6, 8, 10, 11: 25.000 VND per order\nDistricts 2, 7, 9, Nha Be, Can Gio: 30.000 VND per order',
+          vi: 'Quận Hóc Môn: Miễn phí vận chuyển\nQuận 12, Củ Chi, Gò Vấp, Tân Bình, Tân Phú, Bình Tân: 15.000 VNĐ mỗi đơn hàng\nQuận Bình Chánh, Bình Thạnh, Phú Nhuận, Thủ Đức: 20.000 VNĐ mỗi đơn hàng\nQuận 1, 3, 4, 5, 6, 8, 10, 11: 25.000 VNĐ mỗi đơn hàng\nQuận 2, 7, 9, Nhà Bè, Cần Giờ: 30.000 VNĐ mỗi đơn hàng',
         },
       },
       {
