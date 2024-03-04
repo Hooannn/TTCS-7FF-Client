@@ -75,7 +75,7 @@ const CheckoutPage: FC = () => {
           ...values,
         });
         dispatch(setOrderNote(''));
-        navigate(`/sales/thanks/${data.data._id}`);
+        navigate(`/sales/thanks/${data.data.orderId}`);
       },
       okButtonProps: {
         type: 'primary',

@@ -432,5 +432,12 @@
   "INVALID_CHECKOUT_TIME": "Xin lỗi, bạn chỉ có thể đặt hàng online từ 7:00 đến 22:00, và dịch vụ giao hàng chỉ khả dụng trước 21:00",
   "INVALID_VOUCHER_AMOUNT": "Mã giảm giá có giá trị giảm không hợp lệ",
   "VOUCHER_EXISTED": "Mã giảm giá đã tồn tại",
-  "show details": "xem chi tiết"
+  "VOUCHER_EXPIRED": "Mã giảm giá đã hết hạn",
+  "VOUCHER_ALREADY_USED": "Mã giảm giá đã được sử dụng",
+  "USER_HAS_ORDER": "Người dùng đã có đơn hàng, không thể xóa",
+  "PRODUCT_IS_USED": "Sản phẩm đã được sử dụng trong đơn hàng, không thể xóa",
+  "VOUCHER_IS_USED": "Mã giảm giá đã được sử dụng trong đơn hàng, không thể xóa",
+  "show details": "xem chi tiết",
+  "pending": "Chờ xử lý",
+  "rejected": "Từ chối"
 }

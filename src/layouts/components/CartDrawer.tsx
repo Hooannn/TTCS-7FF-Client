@@ -131,11 +131,11 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                         if (quantity === 0) return;
                         else if (quantity < 0)
                           return removeCartItemMutation.mutate({
-                            productId: item.product?._id as string,
+                            productId: item.product?.productId as string,
                             quantity: Math.abs(quantity),
                           });
                         return addCartItemMutation.mutate({
-                          productId: item.product?._id as string,
+                          productId: item.product?.productId as string,
                           quantity: Math.abs(quantity),
                         });
                       }}
@@ -147,7 +147,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                         shape="circle"
                         loading={removeCartItemMutation.isLoading}
                         icon={<DeleteOutlined />}
-                        onClick={() => removeCartItemMutation.mutate({ productId: item.product?._id as string, quantity: 100000 })}
+                        onClick={() => removeCartItemMutation.mutate({ productId: item.product?.productId as string, quantity: 100000 })}
                       />
                     </Tooltip>
                   </div>

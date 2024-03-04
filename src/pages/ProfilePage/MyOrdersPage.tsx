@@ -25,7 +25,7 @@ const MyOrdersPage: FC = () => {
   const [activeStatus, setActiveStatus] = useState<OrderStatus | ''>('');
   const [sortOption, setSortOption] = useState('');
   const fetchOrdersQuery = useQuery(['my-orders', sortOption], {
-    queryFn: () => axios.get<IResponseData<IOrder[]>>(`/my-orders/${user._id}?sort=${sortOption}`),
+    queryFn: () => axios.get<IResponseData<IOrder[]>>(`/my-orders/${user.userId}?sort=${sortOption}`),
     enabled: true,
     refetchIntervalInBackground: true,
     refetchInterval: 5 * 60 * 1000,

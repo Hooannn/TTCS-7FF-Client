@@ -78,10 +78,10 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
               <div>{t('search by order status')}</div>
               <Select value={status} size="large" defaultValue="All" style={{ width: '100%' }} onChange={value => setStatus(value)}>
                 <Select.Option value="All">{t('all')}</Select.Option>
+                <Select.Option value="Pending">{t('pending')}</Select.Option>
                 <Select.Option value="Processing">{t('processing')}</Select.Option>
-                <Select.Option value="Delivering">{t('delivering')}</Select.Option>
                 <Select.Option value="Done">{t('done')}</Select.Option>
-                <Select.Option value="Cancelled">{t('cancelled')}</Select.Option>
+                <Select.Option value="Rejected">{t('rejected')}</Select.Option>
               </Select>
             </div>
             <div>
@@ -94,6 +94,14 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
                 <Select.Option value="createdAt">
                   <SortAscendingOutlined />
                   {t('created at')}
+                </Select.Option>
+                <Select.Option value="-updatedAt">
+                  <SortDescendingOutlined />
+                  {t('updated at')}
+                </Select.Option>
+                <Select.Option value="updatedAt">
+                  <SortAscendingOutlined />
+                  {t('updated at')}
                 </Select.Option>
               </Select>
             </div>

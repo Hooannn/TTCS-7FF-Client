@@ -61,8 +61,6 @@ export default function UsersDashboardPage() {
       [t('created at')]: dayjs(rawCategory.createdAt).format('DD/MM/YYYY'),
       [t('name') + ' VI']: rawCategory.name?.vi,
       [t('name') + ' EN']: rawCategory.name?.en,
-      [t('description') + ' VI']: rawCategory.name?.vi,
-      [t('description') + ' EN']: rawCategory.name?.en,
     }));
     exportToCSV(categories, `7FF_Categories_${Date.now()}`);
   };

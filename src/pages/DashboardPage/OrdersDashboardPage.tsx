@@ -55,12 +55,13 @@ export default function UsersDashboardPage() {
       [t('customer id')]: rawOrder.customerId,
       [t('total price')]: rawOrder.totalPrice,
       [t('voucher')]: (rawOrder.voucher as any)?.code,
+      [t('delivery address')]: rawOrder.deliveryAddress,
+      [t('delivery phone number')]: rawOrder.deliveryPhone,
       [t('note')]: rawOrder.note,
-      [t('is delivery')]: rawOrder.isDelivery
-        ? `${t('phone number')}: ${rawOrder.deliveryPhone}, ${t('address')}: ${rawOrder.deliveryAddress}`
-        : t('no'),
       [t('status')]: t(rawOrder.status.toLowerCase()).toString(),
-      [t('items')]: rawOrder.items?.map((item: any) => `${item.product?.name[locale]} x ${item.quantity}`).join(','),
+      [t('items')]: rawOrder.items
+        ?.map((item: any) => `${locale === 'vi' ? item.product?.nameVi : item.product?.nameEn} x ${item.quantity}`)
+        .join('\n'),
     }));
     exportToCSV(orders, `7FF_Orders_${Date.now()}`);
   };

@@ -75,13 +75,16 @@ export default function ProductsDashboardPage() {
     const products = data?.data.map(rawProduct => ({
       [t('id').toString()]: rawProduct._id,
       [t('created at')]: dayjs(rawProduct.createdAt).format('DD/MM/YYYY'),
-      [t('unit price')]: rawProduct.price,
-      [t('name') + ' VI']: rawProduct.name.vi,
-      [t('name') + ' EN']: rawProduct.name.vi,
-      [t('description') + ' VI']: rawProduct.description.vi,
-      [t('description') + ' EN']: rawProduct.description.en,
-      [t('category')]: (rawProduct.category as any).name[locale],
-      [t('is available')]: rawProduct.isAvailable,
+      [t('unit price')]: rawProduct.currentPrice,
+      [t('name') + ' VI']: rawProduct.nameVi,
+      [t('name') + ' EN']: rawProduct.nameEn,
+      [t('description') + ' VI']: rawProduct.descriptionVi,
+      [t('description') + ' EN']: rawProduct.descriptionEn,
+      [t('featured images')]: `${
+        rawProduct.featuredImages && rawProduct.featuredImages?.length > 0 ? rawProduct.featuredImages?.join('\n') : t('no images')
+      }`,
+      [t('category')]: locale === 'vi' ? (rawProduct.category as any).nameVi : (rawProduct.category as any).nameEn,
+      [t('is available')]: rawProduct.isAvailable ? t('yes') : t('no'),
     }));
     exportToCSV(products, `7FF_Products_${Date.now()}`);
   };

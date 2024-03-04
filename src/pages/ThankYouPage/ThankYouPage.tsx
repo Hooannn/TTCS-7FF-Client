@@ -36,7 +36,7 @@ export default function ThankYouPage() {
 
             <div className="order-info">
               <h4 className="title">{t('your order has been received')} !</h4>
-              <p className="sub-title">{`${t('order ID')}: ${order?._id}`}</p>
+              <p className="sub-title">{`${t('order ID')}: ${order?.orderId}`}</p>
               <Space align="center" size={12}>
                 <Button onClick={() => navigate('/profile/orders')} style={{ ...buttonStyle, width: 220 }} shape="round" className="to-my-orders">
                   <strong>{t('see your orders')}</strong>

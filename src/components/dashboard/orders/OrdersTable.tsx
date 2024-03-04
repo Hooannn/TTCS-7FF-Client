@@ -111,17 +111,29 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
               {item.product ? (
                 <>
                   <Col>
-                    {item.product?.featuredImages?.length ? <Image width={50} src={item.product?.featuredImages[0]} /> : <i>({t('no images')})</i>}
+                    {item.product?.images?.length ? (
+                      <Image width={50} src={item.product?.images[0]?.imageUrl} />
+                    ) : (
+                      <small>
+                        <i>({t('no images')})</i>
+                      </small>
+                    )}
                   </Col>
                   <Col>
                     <div>
-                      {t('name')}: {locale === 'vi' ? item.product?.nameVi : item.product?.nameEn}
+                      <small>
+                        {t('name')}: {locale === 'vi' ? item.product?.nameVi : item.product?.nameEn}
+                      </small>
                     </div>
                     <div>
-                      {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product?.price ?? 0)}
+                      <small>
+                        {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item?.price ?? 0)}
+                      </small>
                     </div>
                     <div>
-                      {t('quantity')}: {item.quantity}
+                      <small>
+                        {t('quantity')}: {item.quantity}
+                      </small>
                     </div>
                   </Col>
                 </>
@@ -160,26 +172,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       key: 'voucher',
       render: (voucher: IVoucher) => (
         <span>
-          {!voucher?._id && voucher !== null && (
+          {voucher?.code ?? (
             <small>
               <em>{t('not updated yet')}</em>
             </small>
-          )}
-          {!voucher?._id && voucher === null && (
-            <small>
-              <em>{t('voucher deleted')}</em>
-            </small>
-          )}
-          {voucher?._id && (
-            <>
-              <div>CODE: {voucher.code}</div>
-              <div>
-                {t('discount amount')}: {voucher.discountAmount}
-              </div>
-              <div>
-                {t('discount type')}: {t(voucher.discountType)}
-              </div>
-            </>
           )}
         </span>
       ),

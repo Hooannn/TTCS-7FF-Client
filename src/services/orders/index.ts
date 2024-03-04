@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
   '-createdAt': { createdAt: 'DESC' },
   createdAt: { createdAt: 'ASC' },
+  '-updatedAt': { updatedAt: 'DESC' },
+  updatedAt: { updatedAt: 'ASC' },
 };
 export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
   const { t } = useTranslation();
@@ -27,11 +29,10 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
     const query: any = {};
     if (customerId) query.customerId = customerId;
     if (status) query.status = status !== 'All' ? status : undefined;
-    if (range)
-      query.createdAt = {
-        $gte: range[0],
-        $lte: range[1],
-      };
+    if (range) {
+      if (range[0]) query.startTime = range[0];
+      if (range[1]) query.endTime = range[1];
+    }
     setQuery(JSON.stringify(query));
     if (sort) setSort(JSON.stringify((SORT_MAPPING as any)[sort]));
   };

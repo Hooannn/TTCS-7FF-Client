@@ -429,5 +429,12 @@
   "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 22:00, and the delivery service is only available before 21:00",
   "INVALID_VOUCHER_AMOUNT": "This voucher has an invalid discount amount",
   "VOUCHER_EXISTED": "This voucher is already existed",
-  "show details": "show details"
+  "VOUCHER_EXPIRED": "This voucher has expired",
+  "VOUCHER_ALREADY_USED": "This voucher has been used",
+  "USER_HAS_ORDER": "This user has already ordered, you cannot delete it",
+  "PRODUCT_IS_USED": "This product is being used in orders, you cannot delete it",
+  "VOUCHER_IS_USED": "This voucher is being used in orders, you cannot delete it",
+  "show details": "show details",
+  "pending": "Pending",
+  "rejected": "Rejected"
 }
