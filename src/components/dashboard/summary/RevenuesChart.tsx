@@ -10,9 +10,8 @@ interface RevenuesChartProps {
       }[]
     | undefined;
   loading?: boolean;
-  extra: JSX.Element;
 }
-export default function RevenuesChart({ data, loading, extra }: RevenuesChartProps) {
+export default function RevenuesChart({ data, loading }: RevenuesChartProps) {
   const { t } = useTranslation();
   return (
     <Card
@@ -22,7 +21,6 @@ export default function RevenuesChart({ data, loading, extra }: RevenuesChartPro
           <Col>
             <h3>{t('revenues')}</h3>
           </Col>
-          <Col>{extra}</Col>
         </Row>
       }
       style={{
