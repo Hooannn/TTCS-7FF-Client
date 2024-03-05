@@ -2,6 +2,7 @@ import { IVoucher } from './product';
 
 export interface IOrder {
   _id: string;
+  orderId: string;
   customerId: string;
   items: {
     productId: string;

@@ -436,5 +436,7 @@
   "VOUCHER_IS_USED": "This voucher is being used in orders, you cannot delete it",
   "show details": "show details",
   "pending": "Pending",
-  "rejected": "Rejected"
+  "rejected": "Rejected",
+  "rejection reason": "Rejection reason",
+  "enter rejection reason": "Enter rejection reason"
 }

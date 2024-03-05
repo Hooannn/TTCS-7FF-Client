@@ -37,7 +37,7 @@ export default function UsersDashboardPage() {
   const { t } = useTranslation();
   useTitle(`${t('orders')} - 7FF`);
   const onUpdateOrder = (values: IOrder) => {
-    updateOrderMutation.mutateAsync({ orderId: selectedOrder?._id as string, data: values }).finally(() => setUpdateModalOpen(false));
+    updateOrderMutation.mutateAsync({ orderId: selectedOrder?.orderId as string, data: values }).finally(() => setUpdateModalOpen(false));
   };
   const onDeleteVoucher = (orderId: string) => {
     deleteOrderMutation.mutate(orderId);

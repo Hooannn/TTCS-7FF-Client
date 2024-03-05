@@ -1,7 +1,7 @@
-import { Modal, Row, Col, Button, Form, FormInstance, Select } from 'antd';
-import { useEffect } from 'react';
+import { Modal, Row, Col, Button, Form, FormInstance, Select, Input } from 'antd';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { buttonStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
+import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { IOrder } from '../../../types';
 interface UpdateOrderModalProps {
   shouldOpen: boolean;
@@ -56,22 +56,46 @@ export default function UpdateOrderModal({ order, shouldOpen, onCancel, onSubmit
 
 export const UpdateOrderForm = ({ form, onSubmit, order }: { form: FormInstance; onSubmit: (values: IOrder) => void; order: IOrder | null }) => {
   const { t } = useTranslation();
+  const [shouldShowRejectionReason, setShouldShowRejectionReason] = useState(false)
 
   const onFinish = (values: any) => {
     onSubmit({ ...values });
   };
 
+  const onSelectionChange = (event: string) => {
+    form.resetFields(['rejectionReason'])
+    if (event === 'Rejected') setShouldShowRejectionReason(true)
+    else setShouldShowRejectionReason(false)
+  }
+
   return (
     <>
       <Form layout="vertical" onFinish={onFinish} form={form}>
         <Form.Item label={t('order status')} name="status">
-          <Select size="large" style={{ width: '100%' }}>
+          <Select size="large" style={{ width: '100%' }} onChange={onSelectionChange}>
+            <Select.Option value="Pending">{t('pending')}</Select.Option>
             <Select.Option value="Processing">{t('processing')}</Select.Option>
-            <Select.Option value="Delivering">{t('delivering')}</Select.Option>
+            <Select.Option value="Rejected">{t('rejected')}</Select.Option>
             <Select.Option value="Done">{t('done')}</Select.Option>
-            <Select.Option value="Cancelled">{t('cancelled')}</Select.Option>
           </Select>
         </Form.Item>
+        {
+          shouldShowRejectionReason && <Form.Item
+            rules={[
+              { required: shouldShowRejectionReason, message: t('required').toString() },
+              { whitespace: shouldShowRejectionReason, message: t('required').toString() },
+            ]}
+            label={t('rejection reason')}
+            name="rejectionReason">
+            <Input.TextArea
+              size="large"
+              spellCheck={false}
+              placeholder={t('enter rejection reason').toString()}
+              autoSize={{ minRows: 3, maxRows: 4 }}
+              style={inputStyle}
+            />
+          </Form.Item>
+        }
       </Form>
     </>
   );

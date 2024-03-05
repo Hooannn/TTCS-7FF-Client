@@ -439,5 +439,7 @@
   "VOUCHER_IS_USED": "Mã giảm giá đã được sử dụng trong đơn hàng, không thể xóa",
   "show details": "xem chi tiết",
   "pending": "Chờ xử lý",
-  "rejected": "Từ chối"
+  "rejected": "Từ chối",
+  "rejection reason": "Lý do từ chối",
+  "enter rejection reason": "Nhập lý do từ chối"
 }

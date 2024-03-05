@@ -30,6 +30,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   setItemPerPage,
 }) => {
   const { t } = useTranslation();
+  const allowedUpdateStatuses = ["Pending", "Processing"];
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
   const onDeleteBtnClick = (orderId: string) => {
     Modal.confirm({
@@ -216,11 +217,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         return (
           <>
             <Space size="middle">
-              <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
+              <Button disabled={!allowedUpdateStatuses.includes(record.status)} onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
-              </Button>
-              <Button onClick={() => onDeleteBtnClick(record._id)} type="text" shape="round" danger>
-                {t('delete')}
               </Button>
             </Space>
           </>
