@@ -61,6 +61,7 @@ export default function UsersDashboardPage() {
       [t('discount type')]: t(rawVoucher.discountType),
       [t('discount amount')]: rawVoucher.discountAmount,
       [t('total usage limit')]: rawVoucher.totalUsageLimit,
+      [t('current usage')]: rawVoucher.currentUsage,
       [t('expired date')]: dayjs(rawVoucher.expiredDate).format('DD/MM/YYYY'),
     }));
     exportToCSV(vouchers, `7FF_Vouchers_${Date.now()}`);

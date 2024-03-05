@@ -18,22 +18,16 @@ export default function PopularProducts({ extra, type, data, title, highlightFie
   const { t } = useTranslation();
   const navigate = useNavigate();
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
-  const getWeekNumber = (date: Date) => {
-    const onejan = new Date(date.getFullYear(), 0, 1);
-    const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    const dayOfYear = ((today.getTime() - onejan.getTime() + 86400000) / 86400000) >> 0;
-    return Math.ceil(dayOfYear / 7);
-  };
   const columns: ColumnsType<IProduct> = useMemo(
     () => [
       {
         title: t('featured images'),
-        dataIndex: 'featuredImages',
-        key: 'featuredImages',
-        render: featuredImages => (
+        dataIndex: 'featuredImage',
+        key: 'featuredImage',
+        render: featuredImage => (
           <>
-            {featuredImages.length > 0 && <Image width={50} src={featuredImages[0]} />}
-            {!featuredImages.length && (
+            {featuredImage && <Image width={50} src={featuredImage} />}
+            {!featuredImage && (
               <small>
                 <em>{t('not updated yet')}</em>
               </small>
@@ -76,46 +70,11 @@ export default function PopularProducts({ extra, type, data, title, highlightFie
         title: highlightFieldDisplay,
         dataIndex: highlightField,
         key: highlightField,
-        render: data => {
-          if (extra === 'view')
-            return (
-              <Tag>
-                <strong>{data.count ? data.count : 0}</strong>
-              </Tag>
-            );
-          const year = new Date().getFullYear().toString();
-          const month = new Date().getMonth() + 1;
-          const week = `${getWeekNumber(new Date())}`;
-          switch (type) {
-            case 'yearly':
-              const yearlyDataIndex = data.findIndex((data: any) => data.year === year);
-              return (
-                <Tag>
-                  <strong>{data[yearlyDataIndex][extra as string]}</strong>
-                </Tag>
-              );
-            case 'weekly':
-              const weeklyDataIndex = data.findIndex((data: any) => data.year === year && data.week === week);
-              return (
-                <Tag>
-                  <strong>{data[weeklyDataIndex][extra as string]}</strong>
-                </Tag>
-              );
-            case 'monthly':
-              const monthlyDataIndex = data.findIndex((data: any) => data.year === year && data.month === month.toString());
-              return (
-                <Tag>
-                  <strong>{data[monthlyDataIndex][extra as string]}</strong>
-                </Tag>
-              );
-            case 'daily':
-              return (
-                <Tag>
-                  <strong>{data[extra as string]}</strong>
-                </Tag>
-              );
-          }
-        },
+        render: data => (
+          <Tag>
+            <strong>{data ?? 0}</strong>
+          </Tag>
+        ),
       },
       {
         title: t('action'),

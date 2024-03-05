@@ -438,5 +438,6 @@
   "pending": "Pending",
   "rejected": "Rejected",
   "rejection reason": "Rejection reason",
-  "enter rejection reason": "Enter rejection reason"
+  "enter rejection reason": "Enter rejection reason",
+  "current usage": "Current usage"
 }

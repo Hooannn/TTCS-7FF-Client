@@ -145,6 +145,13 @@ const VouchersTable: React.FC<VouchersTableProps> = ({
       ),
     },
     {
+      title: t('current usage'),
+      dataIndex: 'currentUsage',
+      key: 'currentUsage',
+      align: 'center',
+      render: value => <span>{value}</span>,
+    },
+    {
       title: t('expired date'),
       dataIndex: 'expiredDate',
       key: 'expiredDate',

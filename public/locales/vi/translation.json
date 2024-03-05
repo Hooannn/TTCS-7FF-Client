@@ -441,5 +441,6 @@
   "pending": "Chờ xử lý",
   "rejected": "Từ chối",
   "rejection reason": "Lý do từ chối",
-  "enter rejection reason": "Nhập lý do từ chối"
+  "enter rejection reason": "Nhập lý do từ chối",
+  "current usage": "Đã sử dụng"
 }

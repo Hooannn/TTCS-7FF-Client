@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useTitle from '../../hooks/useTitle';
 import { Row, Col, Button } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
-import { buttonStyle } from '../../assets/styles/globalStyle';
 import useStatistics from '../../services/statistics';
 import UsersSummary from '../../components/dashboard/summary/UsersSummary';
 import RevenuesSummary from '../../components/dashboard/summary/RevenuesSummary';
@@ -17,9 +15,7 @@ const DashboardPage: FC = () => {
   const orders = getStatisticsQuery.data?.orders;
   const revenues = getStatisticsQuery.data?.revenues;
   const users = getStatisticsQuery.data?.users;
-  const highestViewCountProducts = getPopularProductsQuery.data?.highestViewCountProducts;
   const highestTotalSoldUnitsProducts = getPopularProductsQuery.data?.highestTotalSoldUnitsProducts;
-  const highestTotalSalesProducts = getPopularProductsQuery.data?.highestTotalSalesProducts;
   const newestUsers = getPopularUsersQuery.data?.newestUsers;
   const usersWithHighestTotalOrderValue = getPopularUsersQuery.data?.usersWithHighestTotalOrderValue;
   const segmentedOptions = [
@@ -46,8 +42,6 @@ const DashboardPage: FC = () => {
     const segmentOption = segmentedOptions.find(option => option.value === selectedSegment);
     setType(segmentOption?.value as any);
   }, [selectedSegment]);
-
-  const onExportToCSV = () => {};
 
   return (
     <Row>
@@ -94,30 +88,6 @@ const DashboardPage: FC = () => {
 
       <Col span={24} style={{ padding: '12px 0' }}>
         <Row gutter={12}>
-          {/* <Col lg={24} xl={8}> */}
-          <Col lg={24} xl={12}>
-            <PopularProducts
-              isLoading={getPopularProductsQuery.isLoading}
-              data={highestViewCountProducts}
-              highlightFieldDisplay={t('view').toString()}
-              highlightField={`${type}ViewCount`}
-              extra="view"
-              type={type}
-              title={t('products with the highest view count').toString()}
-            />
-          </Col>
-          {/* <Col lg={24} xl={8}>
-            <PopularProducts
-              isLoading={getPopularProductsQuery.isLoading}
-              data={highestTotalSalesProducts}
-              highlightFieldDisplay={t('total').toString()}
-              type={type}
-              highlightField={`${type}Data`}
-              extra="totalSales"
-              title={t('products with the highest total sales').toString()}
-            />
-          </Col> */}
-          {/* <Col lg={24} xl={8}> */}
           <Col lg={24} xl={12}>
             <PopularProducts
               isLoading={getPopularProductsQuery.isLoading}
@@ -125,8 +95,19 @@ const DashboardPage: FC = () => {
               highlightFieldDisplay={t('unit').toString()}
               type={type}
               extra="totalUnits"
-              highlightField={`${type}Data`}
+              highlightField={`totalSoldUnits`}
               title={t('products with the highest total sold units').toString()}
+            />
+          </Col>
+
+          <Col lg={24} xl={12}>
+            <PopularUsers
+              isLoading={getPopularUsersQuery.isLoading}
+              data={usersWithHighestTotalOrderValue}
+              highlightFieldDisplay={t('total order value').toString()}
+              type="highestTotalOrderValue"
+              highlightField="totalOrderValue"
+              title={t('users with highest total order value').toString()}
             />
           </Col>
         </Row>
@@ -144,22 +125,8 @@ const DashboardPage: FC = () => {
               title={t('newest users').toString()}
             />
           </Col>
-          <Col lg={24} xl={12}>
-            <PopularUsers
-              isLoading={getPopularUsersQuery.isLoading}
-              data={usersWithHighestTotalOrderValue}
-              highlightFieldDisplay={t('total order value').toString()}
-              type="highestTotalOrderValue"
-              highlightField="totalOrderValue"
-              title={t('users with highest total order value').toString()}
-            />
-          </Col>
         </Row>
       </Col>
-
-      {/*<Col span={24} style={{ padding: '24px 0' }}>
-        <RevenuesChart loading={getStatisticsQuery.isLoading} data={revenues?.details} />
-                  </Col>*/}
     </Row>
   );
 };
