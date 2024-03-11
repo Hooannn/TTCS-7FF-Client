@@ -80,3 +80,12 @@
 .google-auth-btn:hover {
   background-color: #302a2a;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(0, 0, 0, 0.88);
+  transition: background-color 5000s ease-in-out 0s;
+}
