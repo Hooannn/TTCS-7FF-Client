@@ -13,6 +13,7 @@ import { RootState } from '../../store';
 import { setOrderNote } from '../../slices/app.slice';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/CartPage.css';
+import { priceFormat } from '../../utils/price-format';
 
 const CartPage: FC = () => {
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ const CartPage: FC = () => {
                       {totalPrice < MINIMUM_VALUE_FOR_FREE_SHIPPING ? (
                         <>
                           <span>{t('buy')} </span>
-                          <strong>{`₫${(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice).toLocaleString('en-US')}`}</strong>
+                          <strong>{priceFormat(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice)}</strong>
                           <span> {t('more to get free shipping')}</span>
                         </>
                       ) : (
@@ -97,7 +98,7 @@ const CartPage: FC = () => {
                             align: 'center',
                             width: 120,
                             render: (value: IDetailedItem['product']) => {
-                              return <span>{value.price.toLocaleString('en-US')} /1</span>;
+                              return <span>{priceFormat(value.price)} /1</span>;
                             },
                           },
                           {
@@ -147,7 +148,7 @@ const CartPage: FC = () => {
                             align: 'center',
                             width: 120,
                             render: (value: any, record: IDetailedItem) => {
-                              return <span>{(record.product.price * record.quantity).toLocaleString('en-US')}₫</span>;
+                              return <span>{priceFormat(record.product.price * record.quantity)}</span>;
                             },
                           },
                         ]}
@@ -158,11 +159,11 @@ const CartPage: FC = () => {
                     <div className="order-summary">
                       <div className="subtotal">
                         <span>{t('subtotal')}:</span>
-                        <span>{`${totalPrice.toLocaleString('en-US')}₫`}</span>
+                        <span>{priceFormat(totalPrice)}</span>
                       </div>
                       <div className="total">
                         <span>{t('total')}:</span>
-                        <span>{`${totalPrice.toLocaleString('en-US')} VND`}</span>
+                        <span>{priceFormat(totalPrice)}</span>
                       </div>
                       <p style={{ margin: '8px 0 0', color: 'rgba(26, 26, 26, 0.7)' }}>{t('VAT included, shipping fee not covered')}.</p>
                       <Input.TextArea

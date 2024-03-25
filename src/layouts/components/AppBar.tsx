@@ -15,6 +15,7 @@ import '../../assets/styles/components/AppBar.css';
 import { useQuery } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { IProduct, IResponseData } from '../../types';
+import { priceFormat } from '../../utils/price-format';
 
 interface IProps {
   isDashboard?: boolean;
@@ -32,13 +33,6 @@ const TABS = [
   { label: 'menu', to: '/menu' },
   { label: 'about us', to: '/about' },
 ];
-
-const getThisMonthSoldUnits = (monthlyData: IMonthlyData[] | undefined) => {
-  const year = new Date().getFullYear().toString();
-  const month = new Date().getMonth() + 1;
-  const currentMonthData = monthlyData?.find(data => data.year === year && data.month === month.toString());
-  return currentMonthData?.totalUnits ?? 0;
-};
 
 const AppBar: FC<IProps> = ({ isDashboard }) => {
   const { t } = useTranslation();
@@ -224,9 +218,9 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                           <div className="search-result-item-name">{product.name[locale]}</div>
                           <div className="search-result-item-price">
                             <p style={{ margin: 0 }}>
-                              {t('price')}: {product.price.toLocaleString('en-US')}/1
+                              {t('price')}: {priceFormat(product.price)} /1
                             </p>
-                            <p style={{ margin: '2px 0 0' }}>{`${t('sold this month')}: ${getThisMonthSoldUnits(product.monthlyData)}`}</p>
+                            <p style={{ margin: '2px 0 0' }}>{`${t('sold this month')}: ${product.totalSoldUnits ?? 0}`}</p>
                           </div>
                         </div>
                       </div>

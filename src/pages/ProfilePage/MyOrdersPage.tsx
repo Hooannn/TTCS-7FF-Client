@@ -16,6 +16,7 @@ import { onError } from '../../utils/error-handlers';
 import { RootState } from '../../store';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/ProfilePage.css';
+import { priceFormat } from '../../utils/price-format';
 
 const MyOrdersPage: FC = () => {
   const { t } = useTranslation();
@@ -284,7 +285,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
                 title: t('current price'),
                 dataIndex: 'product',
                 align: 'center',
-                render: value => <span>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value?.price ?? 0)}</span>,
+                render: value => <span>{priceFormat(value?.price ?? 0)}</span>,
               },
               {
                 title: `${t('availability')}?`,
@@ -312,7 +313,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
           <Row justify="space-between" align="middle">
             <span className="bold-text">{t('total price (shipping included)')}:</span>
             <span className="bold-text">
-              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(orderDetails.totalPrice)}
+              {priceFormat(orderDetails.totalPrice)}
             </span>
           </Row>
           {orderDetails.isDelivery && (

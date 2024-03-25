@@ -7,6 +7,7 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
 import dayjs from '../../../libs/dayjs';
 import { ICartItem } from '../../../slices/app.slice';
+import { priceFormat } from '../../../utils/price-format';
 interface OrdersTableProps {
   isLoading: boolean;
   total: number;
@@ -128,7 +129,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                     </div>
                     <div>
                       <small>
-                        {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item?.price ?? 0)}
+                        {t('unit price')}: {priceFormat(item?.price ?? 0)}
                       </small>
                     </div>
                     <div>

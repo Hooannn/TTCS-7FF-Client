@@ -6,6 +6,7 @@ import { getI18n, useTranslation } from 'react-i18next';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
 import dayjs from '../../../libs/dayjs';
+import { priceFormat } from '../../../utils/price-format';
 interface ProductsTableProps {
   isLoading: boolean;
   total: number;
@@ -182,7 +183,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
       key: 'price',
       render: price => (
         <Tag color="green">
-          {price || (
+          {price ? priceFormat(price) : (
             <small>
               <em>{t('not updated yet')}</em>
             </small>

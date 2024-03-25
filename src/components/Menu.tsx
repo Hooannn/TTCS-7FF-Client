@@ -9,6 +9,7 @@ import { IResponseData, ICategory, IProduct } from '../types';
 import useCartItems from '../services/cart';
 import { containerStyle } from '../assets/styles/globalStyle';
 import '../assets/styles/components/Menu.css';
+import { priceFormat } from '../utils/price-format';
 
 interface IProps {
   isMenuPage?: boolean;
@@ -47,7 +48,7 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
     if (isMenuPage) {
       setLimit(null);
     }
-    return () => {};
+    return () => { };
   }, [isMenuPage]);
 
   useEffect(() => {
@@ -118,7 +119,7 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
                   </h5>
                   <p>{product.description[locale]}</p>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h6 className="price">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}</h6>
+                    <h6 className="price">{priceFormat(product.price)}</h6>
                     <Tooltip title={t('add to cart')} placement="bottom">
                       <Button
                         type="primary"

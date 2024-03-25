@@ -10,6 +10,7 @@ import { IProduct, IResponseData } from '../../types';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import useCartItems from '../../services/cart';
 import '../../assets/styles/pages/ProductPage.css';
+import { priceFormat } from '../../utils/price-format';
 
 const ProductPage: FC = () => {
   const { t } = useTranslation();
@@ -115,7 +116,7 @@ const ProductPage: FC = () => {
                       </p>
                     </Space>
                     <p className="product-description">{product?.description[locale]}</p>
-                    <div className="product-price">{`₫ ${product?.price.toLocaleString('en-US')}`}</div>
+                    <div className="product-price">{priceFormat(product?.price)}</div>
                     <div className="product-rating"></div>
                     <Space align="center" size={15} style={{ marginTop: 30 }}>
                       {product?.isAvailable ? (

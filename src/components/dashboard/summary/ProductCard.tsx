@@ -4,6 +4,7 @@ import { Avatar, Card, Col, Row } from 'antd';
 import { EyeOutlined, DollarOutlined, DropboxOutlined } from '@ant-design/icons';
 import { IProduct } from '../../../types';
 import '../../../assets/styles/pages/ProfilePage.css';
+import { priceFormat } from '../../../utils/price-format';
 
 interface IProductCardProps {
   product: IProduct;
@@ -58,7 +59,7 @@ export default function ProductCard({ product }: IProductCardProps) {
       <Row justify="center">
         <Col>
           <div style={{ fontSize: '30px', margin: '40px 0 0', color: '#ffbe33' }}>
-            <strong>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.currentPrice)}</strong>
+            <strong>{priceFormat(product.currentPrice)}</strong>
           </div>
           <div style={{ margin: '12px 0' }}>
             <strong style={{ fontSize: '20px', color: '#222831' }}>{product.name[locale]}</strong>

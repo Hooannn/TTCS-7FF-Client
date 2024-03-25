@@ -18,6 +18,7 @@ import '../../assets/styles/pages/CheckoutPage.css';
 import FooterModals, { ShippingFeeModal, TermsOfDeliveryModal } from './InfoModals';
 import { setOrderNote } from '../../slices/app.slice';
 import dayjs from 'dayjs';
+import { priceFormat } from '../../utils/price-format';
 
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
@@ -62,7 +63,7 @@ const CheckoutPage: FC = () => {
     Modal.confirm({
       icon: null,
       title: t(`your order total is {{total}}, please confirm before ordering`, {
-        total: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice - discount),
+        total: priceFormat(totalPrice - discount),
       }),
       okText: t('confirm'),
       cancelText: t('cancel'),
@@ -225,9 +226,9 @@ const CheckoutPage: FC = () => {
                       </Badge>
                       <div className="item-name">
                         <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.product.name[locale]}</h4>
-                        <span>{`${(item.product.price * 1).toLocaleString('en-US')} /1`}</span>
+                        <span>{`${priceFormat(item.product.price * 1)} /1`}</span>
                       </div>
-                      <div className="item-price">{`₫${(item.product.price * item.quantity).toLocaleString('en-US')}`}</div>
+                      <div className="item-price">{priceFormat(item.product.price * item.quantity)}</div>
                     </div>
                   ))}
 
@@ -284,12 +285,12 @@ const CheckoutPage: FC = () => {
                 <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                 <div className="display-price">
                   <span>{t('subtotal')}</span>
-                  <span style={{ fontWeight: 500 }}>{`₫${totalPrice.toLocaleString('en-US')}`}</span>
+                  <span style={{ fontWeight: 500 }}>{priceFormat(totalPrice)}</span>
                 </div>
                 {discount > 0 && (
                   <div className="display-price">
                     <span>{t('discount')}</span>
-                    <span style={{ fontWeight: 500, color: 'green' }}>- {`₫${discount.toLocaleString('en-US')}`}</span>
+                    <span style={{ fontWeight: 500, color: 'green' }}>- {priceFormat(discount)}</span>
                   </div>
                 )}
 
@@ -319,7 +320,7 @@ const CheckoutPage: FC = () => {
                   <span style={{ fontSize: '1rem', fontWeight: 500 }}>{t('total')}:</span>
                   <span>
                     <span style={{ marginRight: 9, fontSize: '0.75rem' }}>VND</span>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>{`₫${(totalPrice - discount).toLocaleString('en-US')}`}</span>
+                    <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>{`${(totalPrice - discount).toLocaleString('vi-VN')}`}</span>
                   </span>
                 </div>
               </div>

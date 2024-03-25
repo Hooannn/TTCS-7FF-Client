@@ -10,6 +10,7 @@ import { RootState } from '../../store';
 import { buttonStyle } from '../../assets/styles/globalStyle';
 import useCartItems from '../../services/cart';
 import QuantityInput from '../../components/shared/QuantityInput';
+import { priceFormat } from '../../utils/price-format';
 interface IProps {
   isCartOpen: boolean;
   setIsCartOpen: (value: boolean) => void;
@@ -85,7 +86,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
               {totalPrice < MINIMUM_VALUE_FOR_FREE_SHIPPING ? (
                 <>
                   <span>{t('buy')} </span>
-                  <strong>{`₫${(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice).toLocaleString('en-US')}`}</strong>
+                  <strong>{priceFormat(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice)}</strong>
                   <span> {t('more to get free shipping')}</span>
                 </>
               ) : (
@@ -117,7 +118,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                     <h4 className="item-name">{item.product?.name[locale]}</h4>
                     <p className="item-price">
                       {item.quantity
-                        ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product?.price * item.quantity)
+                        ? priceFormat(item.product?.price * item.quantity)
                         : t('this product is currently unavailable')}
                     </p>
                   </div>
@@ -160,7 +161,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
             <div className="cart-footer">
               <h5 className="total-price">
                 <span>{t('subtotal')}:</span>
-                <span>{`${totalPrice.toLocaleString('en-US')} VND`}</span>
+                <span>{priceFormat(totalPrice)}</span>
               </h5>
               <p>{t('VAT included, shipping fee not covered')}.</p>
               <div style={{ marginTop: 24, display: 'flex', gap: 8 }}>
