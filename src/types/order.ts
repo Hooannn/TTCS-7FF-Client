@@ -19,4 +19,4 @@ export interface IOrder {
   createdAt?: string;
 }
 
-export type OrderStatus = 'Processing' | 'Delivering' | 'Done' | 'Cancelled';
+export type OrderStatus = 'Pending' | 'Processing' | 'Rejected' | 'Done';

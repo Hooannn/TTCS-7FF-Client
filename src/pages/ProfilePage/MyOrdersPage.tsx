@@ -37,7 +37,7 @@ const MyOrdersPage: FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const ORDER_STATUSES = ['Processing', 'Delivering', 'Done', 'Cancelled'];
+  const ORDER_STATUSES = ['Pending', 'Processing', 'Rejected', 'Done'];
   const MATCHING_ITEMS = orders.filter((order: IOrder) => order.status === activeStatus || activeStatus === '');
 
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -118,9 +118,9 @@ const MyOrdersPage: FC = () => {
                         />
                       ),
                     }}
-                    rowKey={(record: IOrder) => record._id as string}
+                    rowKey={(record: IOrder) => record.orderId as string}
                     columns={[
-                      { title: t('order ID'), dataIndex: '_id', width: 210 },
+                      { title: t('order ID'), dataIndex: 'orderId', width: 210 },
                       {
                         title: t('order date'),
                         dataIndex: 'createdAt',
@@ -156,7 +156,7 @@ const MyOrdersPage: FC = () => {
                             type="primary"
                             shape="round"
                             onClick={() => {
-                              setActiveOrderId(record._id);
+                              setActiveOrderId(record.orderId);
                               setOpenModal(true);
                             }}
                             style={{ fontWeight: 500 }}
@@ -244,6 +244,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
       onCancel={onClose}
       width={650}
       footer={[
+        /*
         <Button
           key="rate"
           type="primary"
@@ -254,6 +255,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
         >
           {t('review')}
         </Button>,
+        */
         <Button key="close" type="primary" onClick={onClose} disabled={!orderDetails} style={{ fontWeight: 500 }}>
           {t('close')}
         </Button>,
@@ -267,13 +269,13 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
           <Table
             dataSource={orderDetails.items}
             pagination={false}
-            rowKey={record => record._id}
+            rowKey={record => record.orderId}
             columns={[
               {
                 title: t("product's name"),
                 dataIndex: 'product',
                 width: 240,
-                render: value => <span>{value?.name[locale] ?? t('this product is deleted')}</span>,
+                render: value => <span>{locale === 'vi' ? value?.nameVi : value?.nameEn ?? t('this product is deleted')}</span>,
               },
               {
                 title: t('quantity'),
@@ -285,13 +287,13 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
                 title: t('current price'),
                 dataIndex: 'product',
                 align: 'center',
-                render: value => <span>{priceFormat(value?.price ?? 0)}</span>,
+                render: value => <span>{priceFormat(value?.currentPrice ?? 0)}</span>,
               },
               {
                 title: `${t('availability')}?`,
                 dataIndex: 'product',
                 align: 'center',
-                render: value => <span>{value?.isAvailable ? t('yes') : t('no')}</span>,
+                render: value => <span>{value?.isAvailable?.data[0] === 1 ? t('yes') : t('no')}</span>,
               },
             ]}
           />
@@ -312,9 +314,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
           )}
           <Row justify="space-between" align="middle">
             <span className="bold-text">{t('total price (shipping included)')}:</span>
-            <span className="bold-text">
-              {priceFormat(orderDetails.totalPrice)}
-            </span>
+            <span className="bold-text">{priceFormat(orderDetails.totalPrice)}</span>
           </Row>
           {orderDetails.isDelivery && (
             <>
