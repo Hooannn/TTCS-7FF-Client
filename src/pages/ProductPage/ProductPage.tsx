@@ -36,12 +36,6 @@ const ProductPage: FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const productYearlyTotalSoldUnits = useMemo(() => {
-    const year = new Date().getFullYear().toString();
-    const yearlyDataIndex = product?.yearlyData?.find(data => data.year === year);
-    return yearlyDataIndex?.totalUnits;
-  }, [product]);
-
   return (
     <div className="product-page">
       <section className="container-wrapper">
@@ -74,7 +68,9 @@ const ProductPage: FC = () => {
                     {
                       title: (
                         <Link to={`/menu?category=${locale === 'vi' ? (product?.category as any)?.nameVi : (product?.category as any)?.nameEn}`}>
-                          <span className="breadcrumb-item">{locale === 'vi' ? (product?.category as any)?.nameVi : (product?.category as any)?.nameEn}</span>
+                          <span className="breadcrumb-item">
+                            {locale === 'vi' ? (product?.category as any)?.nameVi : (product?.category as any)?.nameEn}
+                          </span>
                         </Link>
                       ),
                     },
@@ -104,17 +100,20 @@ const ProductPage: FC = () => {
                   <div className="product-desc">
                     <div className="product-name">{product?.name[locale]}</div>
                     <div className="product-sold-units">
-                      <span style={{ fontSize: '1rem', fontWeight: 500 }}>{productYearlyTotalSoldUnits || 0}</span>
-                      <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${productYearlyTotalSoldUnits && productYearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
-                        } ${t('sold this year')}`}</span>
+                      <span style={{ fontSize: '1rem', fontWeight: 500 }}>{product.totalSoldUnits || 0}</span>
+                      <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${
+                        product.totalSoldUnits && product.totalSoldUnits > 1 ? t('units are') : t('unit is')
+                      } ${t('sold this year')}`}</span>
                     </div>
-                    <Space size={10}>
+                    {/*
+                      <Space size={10}>
                       <Rate disabled defaultValue={Math.ceil((product?.rating as any) / 0.5) * 0.5} allowHalf className="product-rating" />
                       <p style={{ margin: '9px 0 0', fontSize: '1.1rem', fontWeight: 500, textTransform: 'lowercase' }}>
                         ({product?.rating?.toFixed(2)} - {product?.ratingCount}{' '}
                         {Number(product?.ratingCount) > 1 ? t('reviews time') : t('review time')})
                       </p>
                     </Space>
+                    */}
                     <p className="product-description">{product?.description[locale]}</p>
                     <div className="product-price">{priceFormat(product?.price)}</div>
                     <div className="product-rating"></div>
