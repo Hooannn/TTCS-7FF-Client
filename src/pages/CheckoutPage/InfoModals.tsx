@@ -272,7 +272,7 @@ const InfoModal: FC<InfoModalPropsWithType> = ({ type, shouldOpen, onClose }) =>
       {CONTENT[type].body.map((prg, i) => (
         <div key={i}>
           <p style={{ margin: '12px 0 8px', fontSize: '1rem', fontWeight: 500, textTransform: 'capitalize' }}>
-            {`0${i + 1}`.slice(-2)}. {prg.subTitle[locale]}
+            {`${i + 1}`.padStart(2, '0')}. {prg.subTitle[locale]}
           </p>
           {prg.text[locale].split('\n').map((_prg, _i) => (
             <p style={{ margin: '0 0 4px' }} key={_i}>

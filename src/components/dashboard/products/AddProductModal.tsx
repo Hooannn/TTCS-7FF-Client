@@ -247,6 +247,7 @@ export const AddProductForm = ({
               spellCheck={false}
               placeholder={t('price').toString()}
               style={inputStyle}
+              min={0}
             />
           </Form.Item>
           <Form.Item name="category" label={t('category')} rules={[{ required: true, message: t('required').toString() }]}>

@@ -4,6 +4,7 @@ import { Axios } from 'axios';
 export interface ICartItem {
   product: IProduct;
   quantity: number;
+  price?: number;
 }
 export interface AppState {
   cartItems: ICartItem[];

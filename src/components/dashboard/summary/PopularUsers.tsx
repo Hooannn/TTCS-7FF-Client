@@ -1,6 +1,6 @@
 import { Avatar, Button, Card, Table, Tag } from 'antd';
 import { IUser } from '../../../types';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, getI18n } from 'react-i18next';
 import { ColumnsType } from 'antd/es/table';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ interface PopularUsersProps {
 }
 export default function PopularUsers({ highlightField, highlightFieldDisplay, type, data, title, isLoading }: PopularUsersProps) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const locale = getI18n().resolvedLanguage as 'vi' | 'en';
   const columns: ColumnsType<IUser> = useMemo(
     () => [
       {
@@ -74,7 +74,7 @@ export default function PopularUsers({ highlightField, highlightFieldDisplay, ty
         ),
       },
     ],
-    [highlightField],
+    [highlightField, locale],
   );
   return (
     <Card

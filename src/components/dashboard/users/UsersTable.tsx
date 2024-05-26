@@ -88,6 +88,7 @@ const UsersTable: React.FC<UsersTableProps> = ({
       title: t('avatar'),
       dataIndex: 'avatar',
       key: 'avatar',
+      align: 'center',
       render: src => <Avatar src={src} size="large" />,
     },
     {
@@ -108,8 +109,9 @@ const UsersTable: React.FC<UsersTableProps> = ({
       title: t('role'),
       dataIndex: 'role',
       key: 'role',
+      align: 'center',
       render: text => (
-        <Tag color="blue">
+        <Tag color="blue" style={{ marginRight: 0 }}>
           {text || (
             <small>
               <em>{t('not updated yet')}</em>
@@ -133,9 +135,9 @@ const UsersTable: React.FC<UsersTableProps> = ({
       ),
     },
     {
-      title: t('first name').toString(),
-      dataIndex: 'firstName',
-      key: 'firstName',
+      title: t('last name').toString(),
+      dataIndex: 'lastName',
+      key: 'lastName',
       render: text => (
         <span>
           {text || (
@@ -147,9 +149,9 @@ const UsersTable: React.FC<UsersTableProps> = ({
       ),
     },
     {
-      title: t('last name').toString(),
-      dataIndex: 'lastName',
-      key: 'lastName',
+      title: t('first name').toString(),
+      dataIndex: 'firstName',
+      key: 'firstName',
       render: text => (
         <span>
           {text || (
@@ -186,7 +188,7 @@ const UsersTable: React.FC<UsersTableProps> = ({
               <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick(record.userId)} type="text" shape="round" danger>
+              <Button onClick={() => onDeleteBtnClick(record.userId)} type="text" shape="round" danger style={{ border: '1px solid' }}>
                 {t('delete')}
               </Button>
             </Space>

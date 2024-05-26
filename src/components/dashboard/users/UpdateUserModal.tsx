@@ -146,7 +146,7 @@ export const UpdateUserForm = ({
             style={inputStyle}
           />
         </Form.Item>
-        <Form.Item label={t('reset password')} name="resetPassword">
+        {/* <Form.Item label={t('reset password')} name="resetPassword">
           <Input.Password
             size="large"
             prefix={<LockOutlined className="site-form-item-icon" />}
@@ -154,7 +154,7 @@ export const UpdateUserForm = ({
             style={inputStyle}
             autoComplete="new-password"
           />
-        </Form.Item>
+        </Form.Item> */}
         {showRole && (
           <Form.Item name="role" label={t('role')} initialValue={'User'}>
             <Select defaultValue={'User'} size="large">

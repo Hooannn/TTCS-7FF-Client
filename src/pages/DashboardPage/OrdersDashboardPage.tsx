@@ -77,7 +77,7 @@ export default function UsersDashboardPage() {
       />
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
+          <Col span={12} style={{ marginBottom: 16 }}>
             <h2>{t('orders')}</h2>
           </Col>
           <Col span={12}>
@@ -85,18 +85,13 @@ export default function UsersDashboardPage() {
               <Col span={5}>
                 <SortAndFilter onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
               </Col>
-              {/*<Col span={5}>
-                <Button block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModelOpen(true)}>
-                  <strong>+ {t('add')}</strong>
-                </Button>
-  </Col>*/}
               <Col span={5}>
                 <Button
                   block
                   icon={<DownloadOutlined style={{ marginRight: '4px' }} />}
                   type="text"
                   shape="round"
-                  style={buttonStyle}
+                  style={{ ...buttonStyle, border: '1px solid' }}
                   loading={fetchAllOrdersMutation.isLoading}
                   onClick={() => onExportToCSV()}
                 >

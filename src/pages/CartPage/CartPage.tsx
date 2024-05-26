@@ -29,7 +29,8 @@ const CartPage: FC = () => {
   }, []);
 
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
-  const { detailedItems, totalPrice, MINIMUM_VALUE_FOR_FREE_SHIPPING } = useCart();
+  const { detailedItems, totalPrice } = useCart();
+
   return (
     <ConfigProvider
       theme={{ token: { colorPrimary: '#1a1a1a' } }}
@@ -41,25 +42,6 @@ const CartPage: FC = () => {
                 <>
                   <div className="heading-and-progress">
                     <h2 className="heading">{t('my cart')}</h2>
-                    <div className="cart-progress">
-                      {totalPrice < MINIMUM_VALUE_FOR_FREE_SHIPPING ? (
-                        <>
-                          <span>{t('buy')} </span>
-                          <strong>{priceFormat(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice)}</strong>
-                          <span> {t('more to get free shipping')}</span>
-                        </>
-                      ) : (
-                        <span>{t('your order is free shipping now')}</span>
-                      )}
-                      <Progress
-                        percent={(totalPrice / MINIMUM_VALUE_FOR_FREE_SHIPPING) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor="#1a1a1a"
-                        trailColor="rgba(26, 26, 26, 0.3)"
-                        style={{ marginBottom: 0 }}
-                      />
-                    </div>
                   </div>
 
                   <div className="cart-items-wrapper">
@@ -172,6 +154,7 @@ const CartPage: FC = () => {
                         placeholder={t('order notes...').toString()}
                         autoSize={{ minRows: 4 }}
                         className="order-notes"
+                        spellCheck="false"
                       />
                       <Button
                         type="primary"

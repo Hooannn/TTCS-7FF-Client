@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Avatar, Button, Divider, Drawer, Progress, Image, Space, Tooltip, Modal } from 'antd';
+import { Avatar, Button, Divider, Drawer, Image, Tooltip, Modal } from 'antd';
 import { DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
 import useCart from '../../hooks/useCart';
 import { IDetailedItem } from '../../types';
@@ -11,6 +11,7 @@ import { buttonStyle } from '../../assets/styles/globalStyle';
 import useCartItems from '../../services/cart';
 import QuantityInput from '../../components/shared/QuantityInput';
 import { priceFormat } from '../../utils/price-format';
+
 interface IProps {
   isCartOpen: boolean;
   setIsCartOpen: (value: boolean) => void;
@@ -23,7 +24,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
   const navigate = useNavigate();
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
 
-  const { detailedItems, totalPrice, MINIMUM_VALUE_FOR_FREE_SHIPPING } = useCart();
+  const { detailedItems, totalPrice } = useCart();
   const handleResetCartBtnClick = () => {
     Modal.confirm({
       icon: <ExclamationCircleFilled />,
@@ -53,7 +54,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
         setIsCartOpen(false);
       }}
       title={t('cart')}
-      contentWrapperStyle={{ width: 600 }}
+      width={600}
       extra={
         cartItems.length !== 0 && (
           <Button loading={resetCartItemsMutation.isLoading} onClick={handleResetCartBtnClick}>
@@ -82,28 +83,6 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
           </div>
         ) : (
           <>
-            <div className="cart-progress">
-              {totalPrice < MINIMUM_VALUE_FOR_FREE_SHIPPING ? (
-                <>
-                  <span>{t('buy')} </span>
-                  <strong>{priceFormat(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice)}</strong>
-                  <span> {t('more to get free shipping')}</span>
-                </>
-              ) : (
-                <span>{t('your order is free shipping now')}</span>
-              )}
-              <Progress
-                percent={(totalPrice / MINIMUM_VALUE_FOR_FREE_SHIPPING) * 100}
-                size="small"
-                showInfo={false}
-                strokeColor="#1a1a1a"
-                trailColor="rgba(26, 26, 26, 0.3)"
-                style={{ marginBottom: 0 }}
-              />
-            </div>
-
-            <Divider style={{ margin: '12px 0', borderColor: 'rgba(26, 26, 26, 0.12)' }} />
-
             <div className="cart-items">
               {detailedItems.map((item: IDetailedItem) => (
                 <div key={item.product?._id} className={`cart-item ${item.quantity === 0 ? 'unavailable' : ''}`}>
@@ -117,9 +96,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <h4 className="item-name">{item.product?.name[locale]}</h4>
                     <p className="item-price">
-                      {item.quantity
-                        ? priceFormat(item.product?.price * item.quantity)
-                        : t('this product is currently unavailable')}
+                      {item.quantity ? priceFormat(item.product?.price * item.quantity) : t('this product is currently unavailable')}
                     </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>

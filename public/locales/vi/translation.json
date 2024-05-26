@@ -209,7 +209,7 @@
   "search by email": "Tìm kiếm theo email",
   "reset": "Đặt lại",
   "address...": "Địa chỉ...",
-  "add note or change quantity": "Thêm ghi chú hoặc thay đổi số lượng",
+  "change quantity": "Thay đổi số lượng",
   "return": "Hoàn trả",
   "terms of delivery": "Điều khoản giao hàng",
   "information security": "Bảo mật thông tin",
@@ -439,7 +439,7 @@
   "VOUCHER_IS_USED": "Mã giảm giá đã được sử dụng trong đơn hàng, không thể xóa",
   "show details": "xem chi tiết",
   "pending": "Chờ xử lý",
-  "rejected": "Từ chối",
+  "rejected": "Bị từ chối",
   "rejection reason": "Lý do từ chối",
   "enter rejection reason": "Nhập lý do từ chối",
   "current usage": "Đã sử dụng"

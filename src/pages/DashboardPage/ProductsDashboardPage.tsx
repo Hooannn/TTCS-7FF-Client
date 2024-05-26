@@ -133,7 +133,7 @@ export default function ProductsDashboardPage() {
 
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
+          <Col span={12} style={{ marginBottom: 16 }}>
             <h2>{t('products')}</h2>
           </Col>
           <Col span={12}>
@@ -152,7 +152,7 @@ export default function ProductsDashboardPage() {
                   icon={<DownloadOutlined style={{ marginRight: '4px' }} />}
                   type="text"
                   shape="round"
-                  style={buttonStyle}
+                  style={{ ...buttonStyle, border: '1px solid' }}
                   loading={fetchAllProductsMutation.isLoading}
                   onClick={() => onExportToCSV()}
                 >

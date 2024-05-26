@@ -6,6 +6,7 @@ interface IViewCount {
 }
 export interface IProduct {
   _id?: string;
+  productId: string;
   name: IContent;
   description: IContent;
   price: number;
@@ -33,6 +34,8 @@ export interface IProduct {
   };
   nameVi: string;
   nameEn: string;
+  descriptionVi: string;
+  descriptionEn: string;
   stocks: number;
   category: ICategory | string;
   isAvailable: boolean;
@@ -43,7 +46,11 @@ export interface IProduct {
   monthlyViewCount?: IViewCount;
   yearlyViewCount?: IViewCount;
   featuredImages?: string[];
+  images?: { imageUrl: string }[];
   createdAt?: string;
+  totalSoldUnits?: number;
+  categoryId?: string;
+  currentPrice?: number;
 }
 
 export interface IDetailedItem {

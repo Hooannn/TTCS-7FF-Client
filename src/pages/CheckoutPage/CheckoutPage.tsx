@@ -11,6 +11,7 @@ import useTitle from '../../hooks/useTitle';
 import useCart from '../../hooks/useCart';
 import useCheckout from '../../services/checkout';
 import useVouchers from '../../services/vouchers';
+import useCartItems from '../../services/cart';
 import { buttonStyle, containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../store';
 import { IDetailedItem, IVoucher } from '../../types';
@@ -28,6 +29,7 @@ const CheckoutPage: FC = () => {
   const navigate = useNavigate();
   const locale = i18n.resolvedLanguage as 'vi' | 'en';
   const { verifyVoucherMutation } = useVouchers({ enabledFetchVouchers: false });
+  const { resetCartItemsMutation } = useCartItems({ enabledFetchCartItems: false });
   const { checkoutMutation } = useCheckout();
   useTitle(`${t('checkout')} - 7FF`);
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ const CheckoutPage: FC = () => {
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
 
   useEffect(() => {
-    formRef.current?.setFieldsValue({ name: `${user.lastName} ${user.firstName}` });
+    formRef.current?.setFieldsValue({ name: `${user.lastName} ${user.firstName}`, note: orderNote });
   }, []);
 
   const [termsOfDeliveryModalOpen, setTermsOfDeliveryModalOpen] = useState(false);
@@ -70,11 +72,12 @@ const CheckoutPage: FC = () => {
       onOk: async () => {
         const { data } = await checkoutMutation.mutateAsync({
           voucherId: voucher?._id,
-          customerId: user._id,
+          customerId: user.userId,
           items,
-          note: orderNote,
+          note: values.note,
           ...values,
         });
+        resetCartItemsMutation.mutate();
         dispatch(setOrderNote(''));
         navigate(`/sales/thanks/${data.data.orderId}`);
       },
@@ -181,13 +184,25 @@ const CheckoutPage: FC = () => {
                       <Input size="large" spellCheck={false} placeholder={t('address...').toString()} style={inputStyle} />
                     </Form.Item>
 
+                    <Form.Item name="note">
+                      <Input.TextArea
+                        size="large"
+                        value={orderNote}
+                        onChange={e => dispatch(setOrderNote(e.target.value))}
+                        placeholder={t('order notes...').toString()}
+                        autoSize={{ minRows: 3 }}
+                        style={inputStyle}
+                        spellCheck="false"
+                      />
+                    </Form.Item>
+
                     <Row align="middle" justify="space-between" style={{ marginTop: 'auto' }}>
                       <div style={{ fontSize: '1rem', fontWeight: 500, cursor: 'pointer' }}>
                         <div onClick={() => navigate('/')}>
                           <HomeOutlined /> {`${t('back to home')}`}
                         </div>
                         <div onClick={() => navigate('/cart')} style={{ marginTop: 4 }}>
-                          <CarryOutOutlined /> {`${t('add note or change quantity')}`}
+                          <CarryOutOutlined /> {`${t('change quantity')}`}
                         </div>
                       </div>
                       <Form.Item style={{ marginBottom: 0 }}>
@@ -213,24 +228,26 @@ const CheckoutPage: FC = () => {
                 <TermsOfDeliveryModal shouldOpen={termsOfDeliveryModalOpen} onClose={() => setTermsOfDeliveryModalOpen(false)} />
                 <ShippingFeeModal shouldOpen={shippingFeeModalOpen} onClose={() => setShippingFeeModalOpen(false)} />
 
-                {detailedItems
-                  .filter((item: IDetailedItem) => item.product.isAvailable)
-                  .map((item: IDetailedItem) => (
-                    <div key={item.product._id} className="checkout-cart-item">
-                      <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
-                        <div className="item-image">
-                          <div className="img-wrapper">
-                            <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : '../alt-feature-img.png'} />
+                <div className="items-wrapper">
+                  {detailedItems
+                    .filter((item: IDetailedItem) => item.product.isAvailable)
+                    .map((item: IDetailedItem) => (
+                      <div key={item.product._id} className="checkout-cart-item">
+                        <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
+                          <div className="item-image">
+                            <div className="img-wrapper">
+                              <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : '../alt-feature-img.png'} />
+                            </div>
                           </div>
+                        </Badge>
+                        <div className="item-name">
+                          <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.product.name[locale]}</h4>
+                          <span>{`${priceFormat(item.product.price * 1)} /1`}</span>
                         </div>
-                      </Badge>
-                      <div className="item-name">
-                        <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.product.name[locale]}</h4>
-                        <span>{`${priceFormat(item.product.price * 1)} /1`}</span>
+                        <div className="item-price">{priceFormat(item.product.price * item.quantity)}</div>
                       </div>
-                      <div className="item-price">{priceFormat(item.product.price * item.quantity)}</div>
-                    </div>
-                  ))}
+                    ))}
+                </div>
 
                 <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                 <Form onFinish={onApplyVoucher} requiredMark={false} name="basic" autoComplete="off">

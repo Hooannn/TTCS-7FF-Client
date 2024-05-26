@@ -15,7 +15,7 @@ import { UploadRequestOption } from 'rc-upload/lib/interface';
 
 const ChangeAvatarPage: FC = () => {
   const { t } = useTranslation();
-  const { uploadMutation } = useFiles();
+  const { uploadMutation, deleteMutation } = useFiles();
   const { updateProfileMutation } = useUsers({ enabledFetchUsers: false, endpoint: '/users' });
   const dispatch = useDispatch();
 
@@ -37,6 +37,11 @@ const ChangeAvatarPage: FC = () => {
   const updateAvatar = () => {
     updateProfileMutation.mutate({ data: { ...user, avatar } });
     dispatch(setUser({ ...user, avatar }));
+  };
+
+  const cancelAvatarChange = () => {
+    deleteMutation.mutate(avatar);
+    setAvatar(user?.avatar);
   };
 
   return (
@@ -85,7 +90,7 @@ const ChangeAvatarPage: FC = () => {
                 size="large"
                 block
                 disabled={!avatar || avatar === user?.avatar}
-                onClick={() => setAvatar(user?.avatar)}
+                onClick={cancelAvatarChange}
                 className="change-avatar-btn"
               >
                 {t('cancel')}
