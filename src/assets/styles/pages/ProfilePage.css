@@ -161,7 +161,7 @@
   color: #ffbe33;
 }
 
-.my-orders .order-list .table-order-status.Delivering {
+.my-orders .order-list .table-order-status.Pending {
   color: #007bff;
 }
 
@@ -169,7 +169,7 @@
   color: #28a745;
 }
 
-.my-orders .order-list .table-order-status.Cancelled {
+.my-orders .order-list .table-order-status.Rejected {
   color: #dc3545;
 }
 

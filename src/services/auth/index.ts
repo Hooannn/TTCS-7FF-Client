@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import { setUser, setLogged, signOut } from '../../slices/auth.slice';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { useTranslation } from 'react-i18next';
+import { setOrderNote } from '../../slices/app.slice';
+
 interface SignInResponse {
   accessToken: string;
   refreshToken: string;
@@ -36,6 +38,7 @@ export default () => {
       navigate(redirectPath as string);
       dispatch(setLogged(true));
       dispatch(setUser(user));
+      dispatch(setOrderNote(''));
     },
   });
 
@@ -61,6 +64,7 @@ export default () => {
       navigate(redirectPath as string);
       dispatch(setLogged(true));
       dispatch(setUser(user));
+      dispatch(setOrderNote(''));
     },
   });
 

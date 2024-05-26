@@ -1,22 +1,19 @@
 import dayjs from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getI18n, useTranslation } from 'react-i18next';
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { Button, Divider, Empty, Modal, Row, Select, Skeleton, Table, Rate, ConfigProvider } from 'antd';
+import { Button, Divider, Empty, Modal, Row, Select, Skeleton, Table } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import useAxiosIns from '../../hooks/useAxiosIns';
-import toastConfig from '../../configs/toast';
 import ProfileSidebar from '../../components/ProfileSidebar';
 import type { OrderStatus } from '../../types';
 import { IOrder, IResponseData } from '../../types';
-import { onError } from '../../utils/error-handlers';
 import { RootState } from '../../store';
 import { containerStyle } from '../../assets/styles/globalStyle';
-import '../../assets/styles/pages/ProfilePage.css';
 import { priceFormat } from '../../utils/price-format';
+import '../../assets/styles/pages/ProfilePage.css';
 
 const MyOrdersPage: FC = () => {
   const { t } = useTranslation();
@@ -38,7 +35,10 @@ const MyOrdersPage: FC = () => {
     window.scrollTo(0, 0);
   }, []);
   const ORDER_STATUSES = ['Pending', 'Processing', 'Rejected', 'Done'];
-  const MATCHING_ITEMS = orders.filter((order: IOrder) => order.status === activeStatus || activeStatus === '');
+  const MATCHING_ITEMS = useMemo(
+    () => orders.filter((order: IOrder) => order.status === activeStatus || activeStatus === ''),
+    [orders, activeStatus],
+  );
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [activeOrderId, setActiveOrderId] = useState<string>('');
@@ -134,13 +134,14 @@ const MyOrdersPage: FC = () => {
                           const totalItems = value.reduce((acc: number, item: any) => {
                             return acc + item.quantity;
                           }, 0);
-                          return <span>{`0${totalItems}`.slice(-2)}</span>;
+                          return <span>{`${totalItems}`.padStart(2, '0')}</span>;
                         },
                       },
                       {
                         title: t('total value'),
                         dataIndex: 'totalPrice',
                         align: 'center',
+                        render: value => <span>{priceFormat(value)}</span>,
                       },
                       {
                         title: t('status'),
@@ -204,39 +205,6 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
   });
   const orderDetails = getOrderDetailQuery.data?.data;
 
-  let ratingValue = 3;
-  const rateOrderMutation = useMutation({
-    mutationFn: (value: number) => axios.put(`/rating/${orderId}`, { value: value }),
-    onError: onError,
-    onSuccess: res => {
-      toast(t(res.data.message), toastConfig('success'));
-    },
-    onSettled: () => {
-      getOrderDetailQuery.refetch();
-    },
-  });
-
-  const handleRatingProducts = () => {
-    Modal.confirm({
-      title: t('rate our products'),
-      content: (
-        <div style={{ width: 302 }}>
-          <Divider style={{ margin: '0 0 6px', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
-          <Rate defaultValue={3} onChange={val => (ratingValue = val)} />
-          <Divider style={{ margin: '10px 0 6px', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
-        </div>
-      ),
-      icon: null,
-      okText: t('confirm'),
-      cancelText: t('cancel'),
-      width: 350,
-      onOk: () => {
-        rateOrderMutation.mutate(ratingValue);
-      },
-      centered: true,
-    });
-  };
-
   return (
     <Modal
       title={t('order details')}
@@ -244,18 +212,6 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
       onCancel={onClose}
       width={650}
       footer={[
-        /*
-        <Button
-          key="rate"
-          type="primary"
-          onClick={handleRatingProducts}
-          disabled={orderDetails?.rating || orderDetails?.status !== 'Done'}
-          style={{ fontWeight: 500 }}
-          className="order-details-rating-btn"
-        >
-          {t('review')}
-        </Button>,
-        */
         <Button key="close" type="primary" onClick={onClose} disabled={!orderDetails} style={{ fontWeight: 500 }}>
           {t('close')}
         </Button>,
@@ -267,6 +223,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
         <div className="order-details">
           <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
           <Table
+            scroll={{ y: 180 }}
             dataSource={orderDetails.items}
             pagination={false}
             rowKey={record => record.orderId}
@@ -281,7 +238,7 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
                 title: t('quantity'),
                 dataIndex: 'quantity',
                 align: 'center',
-                render: value => <span>{`0${value}`.slice(-2)}</span>,
+                render: value => <span>{`${value}`.padStart(2, '0')}</span>,
               },
               {
                 title: t('current price'),

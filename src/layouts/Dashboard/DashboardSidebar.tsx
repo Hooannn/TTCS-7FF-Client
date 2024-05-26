@@ -100,7 +100,7 @@ const DashboardSidebar: FC = () => {
       collapsible
       collapsed={collapsed}
       onCollapse={value => setCollapsed(value)}
-      style={{ boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.12)' }}
+      style={{ boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.12)', position: 'sticky', top: 80, height: 'calc(100vh - 80px)' }}
     >
       <Menu
         mode="inline"

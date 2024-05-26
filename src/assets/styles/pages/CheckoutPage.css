@@ -78,6 +78,14 @@
   gap: 14px;
 }
 
+.cart-items .items-wrapper {
+  max-height: 300px;
+  padding-top: 20px;
+  padding-right: 4px;
+  margin-top: -20px;
+  overflow-y: auto;
+}
+
 .cart-items .checkout-cart-item + .checkout-cart-item {
   margin-top: 18px;
 }

@@ -1,5 +1,5 @@
 import { Modal, Row, Col, Button, Form, Input, FormInstance, Select, Empty, SelectProps, Spin, Image, Upload, Carousel, Space } from 'antd';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { getI18n, useTranslation } from 'react-i18next';
 import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { ICategory, IProduct } from '../../../types';
@@ -31,6 +31,7 @@ export default function UpdateProductModal({
 }: UpdateProductModalProps) {
   const { t } = useTranslation();
   const [form] = Form.useForm();
+  const [imagesToBeDeleted, setImagesToBeDeleted] = useState<string[]>([]);
   const onInternalCancel = () => {
     form.resetFields();
     onCancel();
@@ -81,6 +82,8 @@ export default function UpdateProductModal({
             isLoadingCategory={isLoadingCategory}
             onCategoryChange={onCategoryChange}
             onSearchCategory={onSearchCategory}
+            imagesToBeDeleted={imagesToBeDeleted}
+            setImagesToBeDeleted={setImagesToBeDeleted}
           />
         </Col>
       </Row>
@@ -96,6 +99,8 @@ export const UpdateProductForm = ({
   isLoadingCategory,
   onSearchCategory,
   onCategoryChange,
+  imagesToBeDeleted,
+  setImagesToBeDeleted,
 }: {
   isLoadingCategory: boolean;
   categories: ICategory[] | undefined;
@@ -104,6 +109,8 @@ export const UpdateProductForm = ({
   product: IProduct | null;
   onSearchCategory: (value: string) => void;
   onCategoryChange: (value: string) => void;
+  imagesToBeDeleted: string[];
+  setImagesToBeDeleted: Dispatch<SetStateAction<string[]>>;
 }) => {
   const { t } = useTranslation();
   const { uploadMutation, deleteMutation } = useFiles();
@@ -111,7 +118,13 @@ export const UpdateProductForm = ({
   const [featuredImages, setFeaturedImages] = useState<string[]>(product?.featuredImages || []);
   const carouselRef = useRef<CarouselRef>(null);
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+    await Promise.all(
+      imagesToBeDeleted.map(async (image: string) => {
+        await deleteMutation.mutateAsync(image);
+      }),
+    );
+
     onSubmit({
       category: values.category.value,
       categoryId: values.category.value,
@@ -135,7 +148,7 @@ export const UpdateProductForm = ({
   };
 
   const onDeleteFeaturedImage = async (image: string) => {
-    await deleteMutation.mutateAsync(image);
+    setImagesToBeDeleted(prev => [...prev, image]);
     setFeaturedImages(prev => prev?.filter(item => item !== image));
   };
 
@@ -262,6 +275,7 @@ export const UpdateProductForm = ({
               spellCheck={false}
               placeholder={t('price').toString()}
               style={inputStyle}
+              min={0}
             />
           </Form.Item>
           <Form.Item name="category" label={t('category')} rules={[{ required: true, message: t('required').toString() }]}>

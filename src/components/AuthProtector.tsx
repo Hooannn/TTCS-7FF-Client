@@ -23,6 +23,9 @@ export default function AuthProtector({ children, redirect, allowedRoles }: Auth
 
   useEffect(() => {
     cookies.set('redirect_path', location.pathname);
+    if (accessToken) {
+      cookies.remove('redirect_path', { path: '/' });
+    }
   }, [location]);
 
   const redirectFn = () => {

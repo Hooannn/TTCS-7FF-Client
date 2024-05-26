@@ -47,7 +47,7 @@ const DashboardPage: FC = () => {
     <Row>
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
+          <Col span={12} style={{ marginBottom: 16 }}>
             <h2>Dashboard</h2>
           </Col>
           <Col span={12}>
@@ -88,7 +88,7 @@ const DashboardPage: FC = () => {
 
       <Col span={24} style={{ padding: '12px 0' }}>
         <Row gutter={12}>
-          <Col lg={24} xl={12}>
+          <Col lg={24} xl={24}>
             <PopularProducts
               isLoading={getPopularProductsQuery.isLoading}
               data={highestTotalSoldUnitsProducts}
@@ -97,17 +97,6 @@ const DashboardPage: FC = () => {
               extra="totalUnits"
               highlightField={`totalSoldUnits`}
               title={t('products with the highest total sold units').toString()}
-            />
-          </Col>
-
-          <Col lg={24} xl={12}>
-            <PopularUsers
-              isLoading={getPopularUsersQuery.isLoading}
-              data={usersWithHighestTotalOrderValue}
-              highlightFieldDisplay={t('total order value').toString()}
-              type="highestTotalOrderValue"
-              highlightField="totalOrderValue"
-              title={t('users with highest total order value').toString()}
             />
           </Col>
         </Row>
@@ -123,6 +112,17 @@ const DashboardPage: FC = () => {
               highlightField="createdAt"
               type="newest"
               title={t('newest users').toString()}
+            />
+          </Col>
+
+          <Col lg={24} xl={12}>
+            <PopularUsers
+              isLoading={getPopularUsersQuery.isLoading}
+              data={usersWithHighestTotalOrderValue}
+              highlightFieldDisplay={t('total order value').toString()}
+              type="highestTotalOrderValue"
+              highlightField="totalOrderValue"
+              title={t('users with highest total order value').toString()}
             />
           </Col>
         </Row>

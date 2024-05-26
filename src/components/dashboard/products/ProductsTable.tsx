@@ -183,7 +183,9 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
       key: 'price',
       render: price => (
         <Tag color="green">
-          {price ? priceFormat(price) : (
+          {price ? (
+            priceFormat(price)
+          ) : (
             <small>
               <em>{t('not updated yet')}</em>
             </small>
@@ -202,7 +204,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
               <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick((record as any)._id)} type="text" shape="round" danger>
+              <Button onClick={() => onDeleteBtnClick((record as any)._id)} type="text" shape="round" danger style={{ border: '1px solid' }}>
                 {t('delete')}
               </Button>
             </Space>

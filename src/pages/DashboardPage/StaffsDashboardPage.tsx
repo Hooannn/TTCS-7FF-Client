@@ -88,8 +88,8 @@ export default function StaffsDashboardPage() {
 
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
-            <h2>{t('user')}</h2>
+          <Col span={12} style={{ marginBottom: 16 }}>
+            <h2>{t('staffs')}</h2>
           </Col>
           <Col span={12}>
             <Row align="middle" justify="end" gutter={8}>
@@ -108,7 +108,7 @@ export default function StaffsDashboardPage() {
                   type="text"
                   shape="round"
                   loading={fetchAllUsersMutation.isLoading}
-                  style={buttonStyle}
+                  style={{ ...buttonStyle, border: '1px solid' }}
                   onClick={() => onExportToCSV()}
                 >
                   <strong>{t('export csv')}</strong>

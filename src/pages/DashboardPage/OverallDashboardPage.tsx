@@ -51,7 +51,7 @@ export default function OverallDashboardPage() {
     <Row>
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
+          <Col span={12} style={{ marginBottom: 16 }}>
             <h2>{t('overall')}</h2>
           </Col>
           <Col span={12}>

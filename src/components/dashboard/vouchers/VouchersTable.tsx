@@ -179,7 +179,7 @@ const VouchersTable: React.FC<VouchersTableProps> = ({
               <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick(record._id)} type="text" shape="round" danger>
+              <Button onClick={() => onDeleteBtnClick(record._id)} type="text" shape="round" danger style={{ border: '1px solid' }}>
                 {t('delete')}
               </Button>
             </Space>

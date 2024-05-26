@@ -90,8 +90,9 @@ export default function PopularProducts({ extra, type, data, title, highlightFie
         },
       },
     ],
-    [highlightField],
+    [highlightField, locale],
   );
+
   return (
     <Card
       title={title}

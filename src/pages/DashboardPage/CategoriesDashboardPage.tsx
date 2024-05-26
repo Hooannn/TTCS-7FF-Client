@@ -62,7 +62,7 @@ export default function UsersDashboardPage() {
       [t('name') + ' VI']: rawCategory.name?.vi,
       [t('name') + ' EN']: rawCategory.name?.en,
     }));
-    exportToCSV(categories, `7FF_Categories_${Date.now()}`);
+    exportToCSV(categories, `7FF_Categories_${dayjs(Date.now()).format('DD/MM/YYYY')}`);
   };
 
   return (
@@ -83,7 +83,7 @@ export default function UsersDashboardPage() {
 
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
+          <Col span={12} style={{ marginBottom: 16 }}>
             <h2>{t('categories')}</h2>
           </Col>
           <Col span={12}>
@@ -103,7 +103,7 @@ export default function UsersDashboardPage() {
                   type="text"
                   shape="round"
                   loading={fetchAllCategoriesMutation.isLoading}
-                  style={buttonStyle}
+                  style={{ ...buttonStyle, border: '1px solid' }}
                   onClick={() => onExportToCSV()}
                 >
                   <strong>{t('export csv')}</strong>

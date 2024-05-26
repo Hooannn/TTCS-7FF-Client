@@ -31,7 +31,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   setItemPerPage,
 }) => {
   const { t } = useTranslation();
-  const allowedUpdateStatuses = ["Pending", "Processing"];
+  const allowedUpdateStatuses = ['Pending', 'Processing'];
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
   const onDeleteBtnClick = (orderId: string) => {
     Modal.confirm({
@@ -158,9 +158,12 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       title: t('total price'),
       dataIndex: 'totalPrice',
       key: 'totalPrice',
+      align: 'center',
       render: text => (
-        <Tag color="green">
-          {text + 'VND' || (
+        <Tag color="green" style={{ marginRight: 0 }}>
+          {text ? (
+            priceFormat(text)
+          ) : (
             <small>
               <em>{t('not updated yet')}</em>
             </small>

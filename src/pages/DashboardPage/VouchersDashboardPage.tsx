@@ -61,7 +61,6 @@ export default function UsersDashboardPage() {
       [t('discount type')]: t(rawVoucher.discountType),
       [t('discount amount')]: rawVoucher.discountAmount,
       [t('total usage limit')]: rawVoucher.totalUsageLimit,
-      [t('current usage')]: rawVoucher.currentUsage,
       [t('expired date')]: dayjs(rawVoucher.expiredDate).format('DD/MM/YYYY'),
     }));
     exportToCSV(vouchers, `7FF_Vouchers_${Date.now()}`);
@@ -85,7 +84,7 @@ export default function UsersDashboardPage() {
 
       <Col span={24}>
         <Row align="middle">
-          <Col span={12}>
+          <Col span={12} style={{ marginBottom: 16 }}>
             <h2>{t('vouchers')}</h2>
           </Col>
           <Col span={12}>
@@ -104,7 +103,7 @@ export default function UsersDashboardPage() {
                   icon={<DownloadOutlined style={{ marginRight: '4px' }} />}
                   type="text"
                   shape="round"
-                  style={buttonStyle}
+                  style={{ ...buttonStyle, border: '1px solid' }}
                   loading={fetchAllVouchersMutation.isLoading}
                   onClick={() => onExportToCSV()}
                 >
