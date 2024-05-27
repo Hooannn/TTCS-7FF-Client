@@ -440,5 +440,7 @@
   "rejected": "Rejected",
   "rejection reason": "Rejection reason",
   "enter rejection reason": "Enter rejection reason",
-  "current usage": "Current usage"
+  "current usage": "Current usage",
+  "jwt expired": "Your token has expired",
+  "invalid signature": "Invalid signature"
 }

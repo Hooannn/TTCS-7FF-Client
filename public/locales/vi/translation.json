@@ -442,5 +442,7 @@
   "rejected": "Bị từ chối",
   "rejection reason": "Lý do từ chối",
   "enter rejection reason": "Nhập lý do từ chối",
-  "current usage": "Đã sử dụng"
+  "current usage": "Đã sử dụng",
+  "jwt expired": "Token đã hết hạn sử dụng",
+  "invalid signature": "Token không hợp lệ"
 }

@@ -30,9 +30,10 @@ const useRefreshToken = () => {
         },
       })
         .then(res => {
-          const { accessToken } = res?.data?.data;
+          const { accessToken, refreshToken } = res?.data?.data;
           if (accessToken) {
             cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
+            cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
             resolve(accessToken);
           } else {
             handleError();
