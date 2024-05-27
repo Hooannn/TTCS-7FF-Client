@@ -85,7 +85,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
           <>
             <div className="cart-items">
               {detailedItems.map((item: IDetailedItem) => (
-                <div key={item.product?._id} className={`cart-item ${item.quantity === 0 ? 'unavailable' : ''}`}>
+                <div key={item.product?.productId} className={`cart-item ${item.quantity === 0 ? 'unavailable' : ''}`}>
                   <div className="item-image">
                     {item.product?.featuredImages?.length ? (
                       <Image src={item.product?.featuredImages[0]} />

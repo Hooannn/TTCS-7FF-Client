@@ -88,7 +88,7 @@ export default function PopularUsers({ highlightField, highlightFieldDisplay, ty
       <Table
         size="small"
         style={{ width: '100%' }}
-        rowKey={(record: IUser) => (record as any)._id}
+        rowKey={(record: IUser) => (record as any).userId}
         loading={isLoading}
         columns={columns}
         dataSource={data}
