@@ -120,7 +120,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({
               <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick((record as any)._id)} type="text" shape="round" danger>
+              <Button onClick={() => onDeleteBtnClick((record as any)._id)} type="text" shape="round" danger style={{ border: '1px solid' }}>
                 {t('delete')}
               </Button>
             </Space>
