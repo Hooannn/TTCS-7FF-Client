@@ -39,7 +39,7 @@ export default function UsersDashboardPage() {
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const { t } = useTranslation();
-  useTitle(`${t('user')} - 7FF`);
+  useTitle(`${t('customers')} - 7FF`);
 
   const onUpdateUser = (values: IUser) => {
     updateUserMutation.mutateAsync({ userId: selectedUser?.userId as string, data: values }).finally(() => setUpdateModalOpen(false));
@@ -128,6 +128,7 @@ export default function UsersDashboardPage() {
           setCurrent={setCurrent}
           itemPerPage={itemPerPage}
           setItemPerPage={newItemPerPage => setItemPerPage(newItemPerPage)}
+          showUpdateBtn={false}
         />
       </Col>
     </Row>

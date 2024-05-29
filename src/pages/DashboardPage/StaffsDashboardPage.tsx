@@ -143,6 +143,7 @@ export default function StaffsDashboardPage() {
           setCurrent={setCurrent}
           itemPerPage={itemPerPage}
           setItemPerPage={newItemPerPage => setItemPerPage(newItemPerPage)}
+          showUpdateBtn={true}
         />
       </Col>
     </Row>

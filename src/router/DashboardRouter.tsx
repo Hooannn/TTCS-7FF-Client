@@ -32,7 +32,7 @@ const dashboardRouter = [
       },
       {
         path: 'staffs',
-        element: <StaffsDashboardPage />,
+        element: <AuthProtector children={<StaffsDashboardPage />} redirect="/auth" allowedRoles={['Admin']} />,
       },
       {
         path: 'products',
