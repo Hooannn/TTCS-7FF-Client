@@ -14,6 +14,8 @@ import useTitle from '../../hooks/useTitle';
 import dayjs, { locale } from 'dayjs';
 import { useMutation } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 export default function StaffsDashboardPage() {
   const {
     fetchUsersQuery,
@@ -68,6 +70,9 @@ export default function StaffsDashboardPage() {
     exportToCSV(users, `7FF_Staffs_${Date.now()}`);
   };
 
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user?.role === 'Admin';
+
   return (
     <Row>
       <UpdateUserModal
@@ -119,6 +124,7 @@ export default function StaffsDashboardPage() {
         </Row>
 
         <UsersTable
+          isAdmin={isAdmin}
           total={total as number}
           onDelete={onDeleteUser}
           onSelectUser={user => {
