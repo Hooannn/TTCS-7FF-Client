@@ -16,6 +16,8 @@ import useAxiosIns from '../../hooks/useAxiosIns';
 import useDebounce from '../../hooks/useDebounce';
 import '../../assets/styles/pages/ProductsDashboardPage.css';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 export default function ProductsDashboardPage() {
   const {
@@ -42,6 +44,8 @@ export default function ProductsDashboardPage() {
   const [searchCategory, setSearchCategory] = useState<string>('');
   const debouncedSearchCategory = useDebounce(searchCategory);
   const [query, setQuery] = useState<string>('');
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user?.role === 'Admin';
   const fetchAllCategoriesQuery = useQuery(['categories-all', query], {
     queryFn: () => {
       return axios.get<IResponseData<ICategory[]>>(`/categories?filter=${query}`);
@@ -142,7 +146,7 @@ export default function ProductsDashboardPage() {
                 <SortAndFilter categories={categories} onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
               </Col>
               <Col span={5}>
-                <Button block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModelOpen(true)}>
+                <Button disabled={!isAdmin} block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModelOpen(true)}>
                   <strong>+ {t('add')}</strong>
                 </Button>
               </Col>
@@ -165,6 +169,7 @@ export default function ProductsDashboardPage() {
 
         <ProductsTable
           total={total as number}
+          isAdmin={isAdmin}
           onDelete={onDeleteProduct}
           onSelectProduct={product => {
             setSelectedProduct(product);

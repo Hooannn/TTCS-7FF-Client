@@ -16,6 +16,7 @@ interface UsersTableProps {
   setCurrent: (value: number) => void;
   onDelete: (userId: string) => void;
   onSelectUser: (user: IUser) => void;
+  isAdmin: boolean;
 }
 const UsersTable: React.FC<UsersTableProps> = ({
   current,
@@ -27,6 +28,7 @@ const UsersTable: React.FC<UsersTableProps> = ({
   total,
   setItemPerPage,
   itemPerPage,
+  isAdmin,
 }) => {
   const { t } = useTranslation();
   const onDeleteBtnClick = (userId: string) => {
@@ -185,10 +187,17 @@ const UsersTable: React.FC<UsersTableProps> = ({
         return (
           <>
             <Space size="middle">
-              <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
+              <Button disabled={!isAdmin} onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick(record.userId)} type="text" shape="round" danger style={{ border: '1px solid' }}>
+              <Button
+                disabled={!isAdmin}
+                onClick={() => onDeleteBtnClick(record.userId)}
+                type="text"
+                shape="round"
+                danger
+                style={{ border: '1px solid' }}
+              >
                 {t('delete')}
               </Button>
             </Space>

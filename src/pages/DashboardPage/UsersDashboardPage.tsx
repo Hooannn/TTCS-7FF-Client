@@ -13,6 +13,8 @@ import useTitle from '../../hooks/useTitle';
 import dayjs from 'dayjs';
 import { useMutation } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
@@ -65,6 +67,9 @@ export default function UsersDashboardPage() {
     exportToCSV(users, `7FF_Users_${Date.now()}`);
   };
 
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user?.role === 'Admin';
+
   return (
     <Row>
       <UpdateUserModal
@@ -104,6 +109,7 @@ export default function UsersDashboardPage() {
         </Row>
 
         <UsersTable
+          isAdmin={isAdmin}
           total={total as number}
           onDelete={onDeleteUser}
           onSelectUser={user => {

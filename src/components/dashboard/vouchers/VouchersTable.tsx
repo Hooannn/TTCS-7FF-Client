@@ -16,6 +16,7 @@ interface VouchersTableProps {
   setCurrent: (value: number) => void;
   onDelete: (voucherId: string) => void;
   onSelectVoucher: (voucher: IVoucher) => void;
+  isAdmin: boolean;
 }
 const VouchersTable: React.FC<VouchersTableProps> = ({
   current,
@@ -27,6 +28,7 @@ const VouchersTable: React.FC<VouchersTableProps> = ({
   total,
   itemPerPage,
   setItemPerPage,
+  isAdmin,
 }) => {
   const { t } = useTranslation();
   const onDeleteBtnClick = (voucherId: string) => {
@@ -176,10 +178,17 @@ const VouchersTable: React.FC<VouchersTableProps> = ({
         return (
           <>
             <Space size="middle">
-              <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
+              <Button disabled={!isAdmin} onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick(record._id)} type="text" shape="round" danger style={{ border: '1px solid' }}>
+              <Button
+                disabled={!isAdmin}
+                onClick={() => onDeleteBtnClick(record._id)}
+                type="text"
+                shape="round"
+                danger
+                style={{ border: '1px solid' }}
+              >
                 {t('delete')}
               </Button>
             </Space>

@@ -13,6 +13,7 @@ interface ProductsTableProps {
   products: IProduct[];
   current: number;
   itemPerPage: number;
+  isAdmin: boolean;
   setItemPerPage: (newItemPerPage: number) => void;
   setCurrent: (value: number) => void;
   onDelete: (productId: string) => void;
@@ -27,6 +28,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
   onSelectProduct,
   total,
   itemPerPage,
+  isAdmin,
   setItemPerPage,
 }) => {
   const { t } = useTranslation();
@@ -201,10 +203,17 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
         return (
           <>
             <Space size="middle">
-              <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
+              <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary" disabled={!isAdmin}>
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick((record as any)._id)} type="text" shape="round" danger style={{ border: '1px solid' }}>
+              <Button
+                onClick={() => onDeleteBtnClick((record as any)._id)}
+                type="text"
+                shape="round"
+                danger
+                style={{ border: '1px solid' }}
+                disabled={!isAdmin}
+              >
                 {t('delete')}
               </Button>
             </Space>

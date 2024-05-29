@@ -16,6 +16,7 @@ interface CategoriesTableProps {
   setCurrent: (value: number) => void;
   onDelete: (categoryId: string) => void;
   onSelectCategory: (category: ICategory) => void;
+  isAdmin: boolean;
 }
 const CategoriesTable: React.FC<CategoriesTableProps> = ({
   current,
@@ -26,6 +27,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({
   onSelectCategory,
   total,
   itemPerPage,
+  isAdmin,
   setItemPerPage,
 }) => {
   const { t } = useTranslation();
@@ -117,10 +119,17 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({
         return (
           <>
             <Space size="middle">
-              <Button onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
+              <Button disabled={!isAdmin} onClick={() => onUpdateBtnClick(record)} shape="round" type="primary">
                 {t('update')}
               </Button>
-              <Button onClick={() => onDeleteBtnClick((record as any)._id)} type="text" shape="round" danger style={{ border: '1px solid' }}>
+              <Button
+                disabled={!isAdmin}
+                onClick={() => onDeleteBtnClick((record as any)._id)}
+                type="text"
+                shape="round"
+                danger
+                style={{ border: '1px solid' }}
+              >
                 {t('delete')}
               </Button>
             </Space>

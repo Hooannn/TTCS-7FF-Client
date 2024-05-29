@@ -14,6 +14,8 @@ import AddCategoryModal from '../../components/dashboard/categories/AddCategoryM
 import { useMutation } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import dayjs from '../../libs/dayjs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 export default function UsersDashboardPage() {
   const {
     fetchCategoriesQuery,
@@ -65,6 +67,9 @@ export default function UsersDashboardPage() {
     exportToCSV(categories, `7FF_Categories_${dayjs(Date.now()).format('DD/MM/YYYY')}`);
   };
 
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user?.role === 'Admin';
+
   return (
     <Row>
       <UpdateCategoryModal
@@ -92,7 +97,7 @@ export default function UsersDashboardPage() {
                 <SortAndFilter onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
               </Col>
               <Col span={5}>
-                <Button block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModalOpen(true)}>
+                <Button disabled={!isAdmin} block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModalOpen(true)}>
                   <strong>+ {t('add')}</strong>
                 </Button>
               </Col>
@@ -114,6 +119,7 @@ export default function UsersDashboardPage() {
         </Row>
 
         <CategoriesTable
+          isAdmin={isAdmin}
           total={total as number}
           onDelete={onDeleteCategory}
           onSelectCategory={category => {
