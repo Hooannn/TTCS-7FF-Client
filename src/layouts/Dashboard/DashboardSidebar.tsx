@@ -32,7 +32,7 @@ const DashboardSidebar: FC = () => {
     setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
   };
 
-  const items = [
+  const ADMINS_ITEMS = [
     {
       label: t('dashboard'),
       key: '',
@@ -56,7 +56,7 @@ const DashboardSidebar: FC = () => {
           icon: <ClusterOutlined />,
         },
         {
-          label: t('users'),
+          label: t('customers'),
           key: '/users',
           icon: <UserOutlined />,
         },
@@ -85,6 +85,56 @@ const DashboardSidebar: FC = () => {
       visible: true,
     },
   ];
+
+  const STAFFS_ITEMS = [
+    {
+      label: t('dashboard'),
+      key: '',
+      icon: <HomeOutlined />,
+      visible: true,
+    },
+    {
+      label: t('client facing'),
+      key: '/client_facing',
+      icon: <UserOutlined />,
+      visible: true,
+      children: [
+        {
+          label: t('products'),
+          key: '/products',
+          icon: <ShoppingCartOutlined />,
+        },
+        {
+          label: t('categories'),
+          key: '/categories',
+          icon: <ClusterOutlined />,
+        },
+        {
+          label: t('customers'),
+          key: '/users',
+          icon: <UserOutlined />,
+        },
+        {
+          label: t('orders'),
+          key: '/orders',
+          icon: <FileTextOutlined />,
+        },
+        {
+          label: t('vouchers'),
+          key: '/vouchers',
+          icon: <TagsOutlined />,
+        },
+      ],
+    },
+    {
+      label: t('overall'),
+      key: '/overall',
+      icon: <LineChartOutlined />,
+      visible: true,
+    },
+  ];
+
+  const items = user.role === 'Admin' ? ADMINS_ITEMS : STAFFS_ITEMS;
 
   useEffect(() => {
     const remainingPath = location.pathname.slice('/dashboard'.length);
