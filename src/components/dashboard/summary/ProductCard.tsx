@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Avatar, Card, Col, Row } from 'antd';
-import { EyeOutlined, DollarOutlined, DropboxOutlined } from '@ant-design/icons';
+import { EyeOutlined, DollarOutlined, DropboxOutlined, MoneyCollectOutlined } from '@ant-design/icons';
 import { IProduct } from '../../../types';
 import '../../../assets/styles/pages/ProfilePage.css';
 import { priceFormat } from '../../../utils/price-format';
@@ -79,6 +79,14 @@ export default function ProductCard({ product }: IProductCardProps) {
                 </div>
               </Col>
               <Col style={{ fontSize: '18px', fontWeight: 500 }}>{product.totalSoldUnits ?? 0}</Col>
+            </Row>
+            <Row align="middle" justify="space-between" style={{ padding: '0' }}>
+              <Col style={{ fontSize: '18px', fontWeight: 500 }}>
+                <div>
+                  <MoneyCollectOutlined /> {t('total sales')}
+                </div>
+              </Col>
+              <Col style={{ fontSize: '18px', fontWeight: 500 }}>{priceFormat(product.totalSales ?? 0)}</Col>
             </Row>
           </div>
         </Col>
