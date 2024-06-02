@@ -2,22 +2,22 @@
 
 ## Todos (test and integrate with new backend api)
 
-- [x] UsersDashboardPage (❌ filter, sort)
-- [x] StaffsDashboardPage (❌ filter, sort)
+- [x] UsersDashboardPage
+- [x] StaffsDashboardPage
 - [x] AuthPage
 - [x] AboutPage
 - [x] AccountEditPage
 - [x] ChangeAvatarPage
 - [x] ChangePasswordPage
-- [ ] CheckoutPage
-- [ ] ThankYouPage
-- [ ] HomePage
-- [ ] MenuPage
-- [ ] CartPage
-- [ ] ProductPage
-- [ ] DashboardPage
-- [ ] ProductsDashboardPage
-- [ ] VouchersDashboardPage
-- [ ] OrdersDashboardPage
-- [ ] CategoriesDashboardPage
-- [ ] OverallDashboardPage
+- [x] CheckoutPage
+- [x] ThankYouPage
+- [x] HomePage
+- [x] MenuPage
+- [x] CartPage
+- [x] ProductPage
+- [x] DashboardPage
+- [x] ProductsDashboardPage
+- [x] VouchersDashboardPage
+- [x] OrdersDashboardPage
+- [x] CategoriesDashboardPage
+- [x] OverallDashboardPage
